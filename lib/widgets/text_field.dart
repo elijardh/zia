@@ -104,6 +104,7 @@ class MkInputField extends StatelessWidget {
         this.inputFormatters,
         this.fillColor,
         this.labelColor,
+        this.preffixIcon,
         this.suffixIcon})
       : assert(controller != null && label != null);
 
@@ -132,6 +133,7 @@ class MkInputField extends StatelessWidget {
   final Color fillColor;
   final Color labelColor;
   final Widget suffixIcon;
+  final Widget preffixIcon;
   @override
   Widget build(BuildContext context) {
 
@@ -157,9 +159,10 @@ class MkInputField extends StatelessWidget {
       },
       textInputAction: textInputAction,
       autovalidate: autoValidate,
-      decoration: new InputDecoration(
 
+      decoration: new InputDecoration(
         suffixIcon: suffixIcon?? null,
+        prefixIcon: preffixIcon?? null,
         fillColor: fillColor ?? XColors.primaryColor.withOpacity(0.05),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
