@@ -16,9 +16,11 @@ class _RegisterState extends State<Register> {
   final TextEditingController phoneNumber = new TextEditingController();
 
   FocusNode _fullName = new FocusNode();
+
   FocusNode _email = new FocusNode();
   FocusNode _password = new FocusNode();
   FocusNode _phoneNumber = new FocusNode();
+
   final GlobalKey<FormState> _formKey = new GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -29,13 +31,16 @@ class _RegisterState extends State<Register> {
             padding: EdgeInsets.symmetric(horizontal: 20),
             color: Colors.white,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Form(
                   key: _formKey,
                   child: Column(
                     children: [
                       YMargin(50),
-                      Image.asset("assets/images/zia.png"),
+                      SizedBox(child: Image.asset("assets/images/zia.png"),
+                      height: 100,
+                      ),
                       YMargin(50),
                       MkInputField(
                         controller: fullName,
@@ -54,9 +59,10 @@ class _RegisterState extends State<Register> {
                         fillColor: Colors.white,
                         //hint: "Full Name",
                         currentNode: _email,
-                        label: "Full Name",
+                        label: "Email",
                         labelColor: XColors.primaryColor,
                         preffixIcon: Icon(Icons.mail_outline),
+
                       ),
                       YMargin(50),
                       MkInputField(
@@ -65,7 +71,7 @@ class _RegisterState extends State<Register> {
                         fillColor: Colors.white,
                         //hint: "Full Name",
                         currentNode: _password,
-                        label: "Full Name",
+                        label: "Password",
                         labelColor: XColors.primaryColor,
                         preffixIcon: Icon(Icons.wb_iridescent),
                       ),
@@ -76,10 +82,11 @@ class _RegisterState extends State<Register> {
                         fillColor: Colors.white,
                         //hint: "Full Name",
                         currentNode: _phoneNumber,
-                        label: "Full Name",
+                        label: "Phone Number",
                         labelColor: XColors.primaryColor,
                         preffixIcon: Icon(Icons.phone),
                       ),
+                      YMargin(50),
                     ],
                   ),
                 ),
@@ -90,6 +97,7 @@ class _RegisterState extends State<Register> {
                   buttonColor: XColors.primaryColor,
                   radius: 10,
                 ),
+                YMargin(50),
               ],
             ),
           ),
