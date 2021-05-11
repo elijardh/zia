@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:zia/utils/colors.dart';
 import 'package:zia/widgets/button.dart';
 import 'package:zia/widgets/text_field.dart';
+import 'package:zia/widgets/text_field_underline.dart';
 import 'package:zia/widgets/y_margin.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -22,6 +26,22 @@ class _RegisterState extends State<Register> {
   FocusNode _phoneNumber = new FocusNode();
 
   final GlobalKey<FormState> _formKey = new GlobalKey();
+
+  void regUser() async{
+    Firebase.initializeApp();
+    print(email.value.text);
+      try{
+        UserCredential user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email.value.text, password: password.value.text);
+        FirebaseFirestore.instance.collection("users").doc().set(
+          {"email": email.value.text, "phoneNumber": phoneNumber.value.text},);
+      }
+      catch(error){
+        print(error.toString());
+      }
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -42,15 +62,18 @@ class _RegisterState extends State<Register> {
                       height: 100,
                       ),
                       YMargin(50),
-                      MkInputField(
+                      TextFieldUnderline(
                         controller: fullName,
-                        borderColor: XColors.primaryColor,
-                        fillColor: Colors.white,
+                        hintText: "Full name",
+                        hintTextColor: Colors.white,
+                        normalBorderColor: XColors.primaryColor,
+                        //borderColor: XColors.primaryColor,
+                        //fillColor: Colors.white,
                         //hint: "Full Name",
-                        currentNode: _fullName,
-                        label: "Full Name",
-                        labelColor: XColors.primaryColor,
-                        preffixIcon: Icon(Icons.account_circle_outlined),
+                        //currentNode: _fullName,
+                        //label: "Full Name",
+                        //labelColor: XColors.primaryColor,
+                        //preffixIcon: Icon(Icons.account_circle_outlined),
                       ),
                       YMargin(50),
                       MkInputField(
@@ -91,6 +114,9 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
                 XButton(
+                  onClick: (){
+                    regUser();
+                  },
                   text: "Register",
                   fontWeight: FontWeight.bold,
                   textColor: Colors.black,
