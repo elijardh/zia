@@ -78,6 +78,66 @@ class XTextField extends StatelessWidget {
   }
 }
 
+class EUnderLineButton extends StatelessWidget {
+  final TextEditingController controller;
+  final String hintText;
+  final Function(String) validator;
+  final TextInputAction textInputAction;
+  final bool obscureText;
+  final Color fillColor;
+  final TextInputType keyboardType;
+  final Color normalBorderColor;
+  final Color enabledBorderColor;
+  final Color focusedBorderColor;
+  final Color hintTextColor;
+  final Color normalTextColor;
+  final bool autoFocus;
+  final bool isEnabled;
+
+  EUnderLineButton({
+    this.autoFocus,
+    this.controller,
+    this.enabledBorderColor,
+    this.fillColor,
+    this.focusedBorderColor,
+    this.hintText,
+    this.hintTextColor,
+    this.isEnabled,
+    this.keyboardType,
+    this.normalBorderColor,
+    this.normalTextColor,
+    this.obscureText,
+    this.textInputAction,
+    this.validator,
+});
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: controller,
+      textInputAction: textInputAction ?? TextInputAction.done,
+      validator:  validator,
+      decoration: InputDecoration(
+          hintText: hintText??"",
+          filled: true,
+          fillColor: fillColor??Colors.white,
+          enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: enabledBorderColor??Colors.black,
+                width: 5,
+              )
+          ),
+          focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 5,
+                  color: focusedBorderColor??Colors.black,
+              )
+          )
+      ),
+    );
+  }
+}
+
+
 class MkInputField extends StatelessWidget {
   const MkInputField(
       {@required this.controller,

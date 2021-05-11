@@ -1,11 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
-
+import 'package:zia/widgets/texts.dart';
+import 'package:zia/widgets/y_margin.dart';
 import 'onboarding.dart';
-
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -22,12 +21,33 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Color.fromRGBO(255,217,25,1),
-        height: SizeConfig.screenHeightDp,
-        width:  SizeConfig.screenWidthDp,
-        child: Center(child: Image.asset("assets/images/zia.png")),
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          child: Column(
+            children: [
+              YMargin(200),
+              Image.asset("assets/images/ziaIcon.png"),
+              NormalText(
+                text: "The one place for everything you want!",
+                textColor: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+              NormalText(
+                text: "(Anyone who says otherwise is trying to scam you)",
+                textColor: Colors.black.withOpacity(0.5),
+              ),
+
+              YMargin(165),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Image.asset("assets/images/splash.png")
+                ],
+              )
+            ],
+          ),
+        )
       ),
     );
   }

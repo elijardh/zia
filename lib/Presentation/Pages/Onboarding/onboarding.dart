@@ -8,6 +8,10 @@ import 'package:zia/Presentation/Views/onboardingview.dart';
 import 'package:zia/utils/colors.dart';
 import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
+import 'package:zia/widgets/button.dart';
+import 'package:zia/widgets/y_margin.dart';
+
+import 'bridgescreen.dart';
 
 class OnBoarding extends StatefulWidget {
   @override
@@ -15,60 +19,83 @@ class OnBoarding extends StatefulWidget {
 }
 
 class _OnBoardingState extends State<OnBoarding> {
-  void pageChange(){
-    if(controller.index == 2){
-      navigate(context,HomePage());
+  final SizeConfig config = new SizeConfig();
+  void pageChange() {
+    if (controller.index == 2) {
+      navigate(context, HomePage());
     }
   }
+
   final SwiperController controller = new SwiperController();
   List<Widget> onBoardingElement = [
     OnBoardingView(
-      text: "We Have all forms of clothing...",
-      imageString: "assets/images/clothing.png",
+      text: "We provide you with end-to-end security, making sure all your transactions are encrypted with ourpatented SHA-256 algorithm and hosted on theblockchain.",
+      splashTitle: "You're secure!",
+      imageString: "assets/images/onboarding1.png",
     ),
     OnBoardingView(
-      text: "... all your Appliances...",
-      imageString: "assets/images/appliances.jpg",
+      text: "Zia offers you a sure money-back gurantee if your ordered product does not reach your doorstep with 59 seconds. You think that’s crazy? Watch us!",
+      splashTitle: "Delivery in seconds",
+      imageString: "assets/images/onboarding2.png",
     ),
     OnBoardingView(
-      text: ".. and all your phone accessory",
-      imageString: "assets/images/mobile.png",
+      splashTitle: "Diverse catalog",
+      text: "We can gurantee a catalog of products that is so diverse it’ll put Hollywood and Silicon Valley companies to shame.",
+      imageString: "assets/images/onboarding3.png",
     ),
   ];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Container(
-          height: SizeConfig.screenHeightDp,
-          width: SizeConfig.screenWidthDp,
-          child: Swiper(
-            controller: controller,
-            autoplay: true,
-            onIndexChanged: (int) {
-              if(int == 2){
-                Timer(Duration(seconds: 2), () {
-                  navigateReplace(context, Register());
-                });
-              }
-            },
-            itemCount: onBoardingElement.length,
-            layout: SwiperLayout.DEFAULT,
-            pagination: SwiperPagination(
-              alignment: Alignment.bottomCenter,
-              builder: DotSwiperPaginationBuilder(
-                color: XColors.primaryColor,
-                activeColor: Colors.white,
-                space: 10,
-              )
-            ),
-            itemBuilder: (BuildContext context, index){
-              return Container(
-                  //color:Colors.white,
-                  child:onBoardingElement[index]);
-            },
-          )
-        ),
+            height: SizeConfig.screenHeightDp,
+            width: SizeConfig.screenWidthDp,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: config.sh(500),
+                  child: Swiper(
+                    controller: controller,
+                    autoplay: true,
+                    scrollDirection: Axis.horizontal,
+                    onIndexChanged: (int) {
+                      if (int == 2) {
+                        Timer(Duration(seconds: 2), () {
+                          navigateReplace(context, BridgePage());
+                        });
+                      }
+                    },
+                    itemCount: onBoardingElement.length,
+                    layout: SwiperLayout.DEFAULT,
+                    pagination: SwiperPagination(
+                        alignment: Alignment.bottomCenter,
+                        builder: DotSwiperPaginationBuilder(
+                          color: XColors.primaryColor,
+                          activeColor: Colors.white,
+                          space: 10,
+                        )),
+                    itemBuilder: (BuildContext context, index) {
+                      return Container(
+                        child: onBoardingElement[index],
+                      );
+                    },
+                  ),
+                ),
+                //YMargin(10),
+                XButton(
+                  text: controller.index == 2 ? "Done" : "Next",
+                  buttonColor: XColors.primaryColor,
+                  textColor: Colors.white,
+                  radius: 10,
+                  width: config.sw(400),
+                ),
+                YMargin(20),
+              ],
+            )),
       ),
     );
   }
