@@ -36,9 +36,7 @@ class NormalText extends StatelessWidget {
   final TextAlign textAlign;
   final FontWeight fontWeight;
   final int maxLines;
-
   NormalText({@required this.text, this.fontSize, this.textColor, this.textAlign, this.fontWeight, this.maxLines});
-
   @override
   Widget build(BuildContext context) {
     return Text(text,
