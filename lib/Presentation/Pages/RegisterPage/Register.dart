@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:zia/utils/colors.dart';
+import 'package:zia/utils/size_config.dart';
 import 'package:zia/widgets/button.dart';
 import 'package:zia/widgets/text_field.dart';
 import 'package:zia/widgets/text_field_underline.dart';
+import 'package:zia/widgets/texts.dart';
 import 'package:zia/widgets/y_margin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -41,7 +43,7 @@ class _RegisterState extends State<Register> {
 
   }
 
-
+  SizeConfig config = new SizeConfig();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -52,62 +54,104 @@ class _RegisterState extends State<Register> {
             color: Colors.white,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      height: config.sh(40),
+                      width: config.sw(70),
+                      decoration: BoxDecoration(
+                        color: XColors.primaryColor,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Center(
+                        child: NormalText(
+                          text: "1/2",
+                          textColor: Colors.white,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                TitleText(
+                  text: "Join Us!",
+                  textColor: XColors.primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 35,
+                ),
+                NormalText(
+                  text: "Spend reponsibly,(take that advice with a grain of salt)",
+                  textColor: Colors.black.withOpacity(0.6),
+                ),
                 Form(
                   key: _formKey,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       YMargin(50),
-                      SizedBox(child: Image.asset("assets/images/zia.png"),
-                      height: 100,
+                      NormalText(
+                        text: "Full Name",
+                        textColor: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
-                      YMargin(50),
-                      TextFieldUnderline(
+                      YMargin(10),
+                      EUnderLineButton(
                         controller: fullName,
                         hintText: "Full name",
-                        hintTextColor: Colors.white,
-                        normalBorderColor: XColors.primaryColor,
-                        //borderColor: XColors.primaryColor,
-                        //fillColor: Colors.white,
-                        //hint: "Full Name",
-                        //currentNode: _fullName,
-                        //label: "Full Name",
-                        //labelColor: XColors.primaryColor,
-                        //preffixIcon: Icon(Icons.account_circle_outlined),
+                        hintTextColor: Colors.black,
+                        fillColor: XColors.primaryColor.withOpacity(0.2),
+                        enabledBorderColor: XColors.primaryColor,
+                        focusedBorderColor: XColors.primaryColor,
                       ),
                       YMargin(50),
-                      MkInputField(
+                      NormalText(
+                        text: "Email Address",
+                        textColor: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      YMargin(10),
+                      EUnderLineButton(
                         controller: email,
-                        borderColor: XColors.primaryColor,
-                        fillColor: Colors.white,
-                        //hint: "Full Name",
-                        currentNode: _email,
-                        label: "Email",
-                        labelColor: XColors.primaryColor,
-                        preffixIcon: Icon(Icons.mail_outline),
-
+                        hintText: "Emial",
+                        hintTextColor: Colors.black,
+                        fillColor: XColors.primaryColor.withOpacity(0.2),
+                        enabledBorderColor: XColors.primaryColor,
+                        focusedBorderColor: XColors.primaryColor,
                       ),
                       YMargin(50),
-                      MkInputField(
+                      NormalText(
+                        text: "Password",
+                        textColor: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      YMargin(10),
+                      EUnderLineButton(
                         controller: password,
-                        borderColor: XColors.primaryColor,
-                        fillColor: Colors.white,
-                        //hint: "Full Name",
-                        currentNode: _password,
-                        label: "Password",
-                        labelColor: XColors.primaryColor,
-                        preffixIcon: Icon(Icons.wb_iridescent),
+                        hintText: "Password",
+                        hintTextColor: Colors.black,
+                        fillColor: XColors.primaryColor.withOpacity(0.2),
+                        enabledBorderColor: XColors.primaryColor,
+                        focusedBorderColor: XColors.primaryColor,
+                        validator: (String val){
+                          PasswordValidiator();
+                        },
                       ),
                       YMargin(50),
-                      MkInputField(
+                      NormalText(
+                        text: "Phone Number",
+                        textColor: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      YMargin(10),
+                      EUnderLineButton(
                         controller: phoneNumber,
-                        borderColor: XColors.primaryColor,
-                        fillColor: Colors.white,
-                        //hint: "Full Name",
-                        currentNode: _phoneNumber,
-                        label: "Phone Number",
-                        labelColor: XColors.primaryColor,
-                        preffixIcon: Icon(Icons.phone),
+                        hintText: "Phone Number",
+                        hintTextColor: Colors.black,
+                        fillColor: XColors.primaryColor.withOpacity(0.2),
+                        enabledBorderColor: XColors.primaryColor,
+                        focusedBorderColor: XColors.primaryColor,
                       ),
                       YMargin(50),
                     ],
@@ -119,9 +163,25 @@ class _RegisterState extends State<Register> {
                   },
                   text: "Register",
                   fontWeight: FontWeight.bold,
-                  textColor: Colors.black,
+                  textColor: Colors.white,
                   buttonColor: XColors.primaryColor,
-                  radius: 10,
+                  radius: 5,
+                ),
+                YMargin(20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    NormalText(
+                      text: "You are one of us?",
+                      textColor: Colors.black.withOpacity(0.6),
+                    ),
+                    GestureDetector(
+                      child: NormalText(
+                        text: "Login",
+                        textColor: XColors.primaryColor,
+                      ),
+                    )
+                  ],
                 ),
                 YMargin(50),
               ],
