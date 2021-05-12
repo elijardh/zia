@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:zia/utils/envConfig.dart';
 
+import 'Presentation/Pages/HomePage/HomePage.dart';
 import 'Presentation/Pages/Onboarding/splashscreen.dart';
 
 void main() {
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
 
         Size size = MediaQuery.of(context).size;
         SizeConfig.init(context, width: size.width, height: size.height, allowFontScaling: true);
-        return SplashScreen();
+        return HomePage();
       }),
     );
   }
