@@ -6,11 +6,16 @@ import 'package:zia/widgets/texts.dart';
 import 'package:zia/widgets/y_margin.dart';
 
 class HomePage extends StatefulWidget {
+  final String name;
+  HomePage({this.name});
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState(name: name);
 }
 
 class _HomePageState extends State<HomePage> {
+  final String name;
+
+  _HomePageState({this.name});
 
   SizeConfig config = new SizeConfig();
   @override
@@ -20,7 +25,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child:Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 15),
             height: SizeConfig.screenHeightDp,
             width: SizeConfig.screenWidthDp,
             child: Column(
@@ -47,7 +52,9 @@ class _HomePageState extends State<HomePage> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.person, color: Colors.black,),
+                      child: NormalText(
+                        text: "Dare",
+                      ), /*Icon(Icons.person, color: Colors.black,)*/
                     ),
                   ],
                 ),
@@ -170,9 +177,23 @@ class _HomePageState extends State<HomePage> {
                   },
                   scrollDirection: Axis.horizontal,
                   itemCount: 8,
-
                   ),
-                )
+                ),
+                YMargin(10),
+                Row(
+                  children: [
+                    NormalText(
+                      text:"Yeah, you wanna see more cool stuff?",
+                      textColor: Colors.black.withOpacity(0.5),
+                    ),
+                    NormalText(
+                      text: "Get Premium",
+                      textColor: XColors.primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ],
+                ),
+                YMargin(10),
               ],
             ),
           )

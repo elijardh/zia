@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:zia/Presentation/Pages/HomePage/HomePage.dart';
 import 'package:zia/utils/colors.dart';
+import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:zia/widgets/button.dart';
 import 'package:zia/widgets/text_field.dart';
@@ -30,12 +32,13 @@ class _RegisterState extends State<Register> {
   final GlobalKey<FormState> _formKey = new GlobalKey();
 
   void regUser() async{
-    Firebase.initializeApp();
+    await Firebase.initializeApp();
     print(email.value.text);
       try{
         UserCredential user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email.value.text, password: password.value.text);
         FirebaseFirestore.instance.collection("users").doc().set(
           {"email": email.value.text, "phoneNumber": phoneNumber.value.text},);
+        navigate(context, HomePage(name: email.text,));
       }
       catch(error){
         print(error.toString());

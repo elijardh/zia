@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 
         Size size = MediaQuery.of(context).size;
         SizeConfig.init(context, width: size.width, height: size.height, allowFontScaling: true);
-        return HomePage();
+        return SplashScreen();
       }),
     );
   }
