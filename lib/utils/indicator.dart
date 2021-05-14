@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:zia/utils/colors.dart';
 
 
@@ -6,18 +7,23 @@ class Indicator extends StatelessWidget {
   Indicator({
     @required this.controller,
     this.itemCount = 0,
+    this.currSizeHeight,
+    this.currSizeWidth,
+    this.normalColor,
+    this.selectedColor,
   }) : assert(controller != null);
 
-  final PageController controller;
+  final SwiperController controller;
   final int itemCount;
-  final Color normalColor = Colors.white;
-  final Color selectedColor = Colors.white;
+  final Color normalColor;
+  final Color selectedColor;
   final double size = 6.0;
+  final double currSizeWidth;
+  final double currSizeHeight;
   final double spacing = 2.0;
 
   Widget _buildIndicator(int index, int pageCount, double dotSize, double spacing) {
-    final bool isCurrentPageSelected = index == (controller.page != null ? controller.page.round() % pageCount: 0);
-
+    final bool isCurrentPageSelected = index == (controller.index != null ? controller.index.round() % pageCount: 0);
     return Padding(
       padding:  EdgeInsets.symmetric(horizontal: spacing),
       child: Container(

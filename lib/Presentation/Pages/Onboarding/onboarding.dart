@@ -6,9 +6,11 @@ import 'package:zia/Presentation/Pages/HomePage/HomePage.dart';
 import 'package:zia/Presentation/Pages/RegisterPage/Register.dart';
 import 'package:zia/Presentation/Views/onboardingview.dart';
 import 'package:zia/utils/colors.dart';
+import 'package:zia/utils/indicator.dart';
 import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:zia/widgets/button.dart';
+import 'package:zia/widgets/customdotwidget.dart';
 import 'package:zia/widgets/y_margin.dart';
 
 import 'bridgescreen.dart';
@@ -19,6 +21,8 @@ class OnBoarding extends StatefulWidget {
 }
 
 class _OnBoardingState extends State<OnBoarding> {
+
+  int currindex = 0;
   final SizeConfig config = new SizeConfig();
   void pageChange() {
     if (controller.index == 2) {
@@ -57,27 +61,30 @@ class _OnBoardingState extends State<OnBoarding> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: config.sh(500),
+                  height: config.sh(450),
                   child: Swiper(
                     controller: controller,
                     autoplay: true,
                     scrollDirection: Axis.horizontal,
                     onIndexChanged: (int) {
-                      if (int == 2) {
+                      setState(() {
+                        currindex = int;
+                      });
+/*                      if (int == 2) {
                         Timer(Duration(seconds: 2), () {
                           navigateReplace(context, BridgePage());
                         });
-                      }
+                      }*/
                     },
                     itemCount: onBoardingElement.length,
                     layout: SwiperLayout.DEFAULT,
-                    pagination: SwiperPagination(
+/*                    pagination: SwiperPagination(
                         alignment: Alignment.bottomCenter,
                         builder: DotSwiperPaginationBuilder(
                           color: XColors.primaryColor,
                           activeColor: Colors.white,
                           space: 10,
-                        )),
+                        )),*/
                     itemBuilder: (BuildContext context, index) {
                       return Container(
                         child: onBoardingElement[index],
@@ -85,7 +92,24 @@ class _OnBoardingState extends State<OnBoarding> {
                     },
                   ),
                 ),
-                //YMargin(10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children:  List<Widget>.generate(onBoardingElement.length, (int index){
+                    return CustomDotWidget(
+                      index: index,
+                      currentIndex: currindex,
+                      height: 5,
+                      activeheight: 8,
+                      size: 50,
+                      activeSize: 200,
+                      active: XColors.primaryColor,
+                      inactive: XColors.primaryColor.withOpacity(0.5),
+
+                    );
+                  }),
+                ),
+                YMargin(40),
                 XButton(
                   text: controller.index == 2 ? "Done" : "Next",
                   buttonColor: XColors.primaryColor,

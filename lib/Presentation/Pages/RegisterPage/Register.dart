@@ -122,6 +122,9 @@ class _RegisterState extends State<Register> {
                         fillColor: XColors.primaryColor.withOpacity(0.2),
                         enabledBorderColor: XColors.primaryColor,
                         focusedBorderColor: XColors.primaryColor,
+                        validator: (String val){
+                          EmailValiditor();
+                        },
                       ),
                       YMargin(50),
                       NormalText(
@@ -131,6 +134,7 @@ class _RegisterState extends State<Register> {
                       ),
                       YMargin(10),
                       EUnderLineButton(
+                        obscureText: true,
                         controller: password,
                         hintText: "Password",
                         hintTextColor: Colors.black,

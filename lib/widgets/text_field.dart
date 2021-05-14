@@ -113,6 +113,7 @@ class EUnderLineButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: obscureText??false,
       controller: controller,
       textInputAction: textInputAction ?? TextInputAction.done,
       validator:  validator,
