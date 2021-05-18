@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:zia/Domain/ProductListModel.dart';
+import 'package:zia/Presentation/Views/Catalog.dart';
 import 'package:zia/Presentation/Views/homepageview.dart';
+import 'package:zia/data/network/API/APICalling/GetProduct.dart';
 import 'package:zia/utils/colors.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:zia/widgets/texts.dart';
@@ -13,10 +16,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<Catalogs> catalogWidget = [
+    Catalogs(catalogTitle: "Electronics",),
+    Catalogs(catalogTitle: "Jewelery",),
+    Catalogs(catalogTitle: "Men Clothing",),
+    Catalogs(catalogTitle: "Women Clothing",),
+  ];
   final String name;
-
   _HomePageState({this.name});
-
+  GetProducts getProduct = new GetProducts();
   SizeConfig config = new SizeConfig();
   @override
   Widget build(BuildContext context) {
@@ -64,99 +72,7 @@ class _HomePageState extends State<HomePage> {
                   width: SizeConfig.screenWidthDp,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
-
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                        child: Container(
-                          height: 5,
-                          width: config.sw(100),
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            color: XColors.primaryColor,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Center(
-                            child: NormalText(
-                              text:"Electronics",
-                              textColor: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                        child: Container(
-                          height: config.sh(10),
-                          width: config.sw(100),
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            color: XColors.primaryColor,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Center(
-                            child: NormalText(
-                              text:"Fashion",
-                              textColor: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                        child: Container(
-                          height: config.sh(30),
-                          width: config.sw(100),
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            color: XColors.primaryColor,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Center(
-                            child: NormalText(
-                              text:"Sports",
-                              textColor: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                        child: Container(
-                          height: config.sh(30),
-                          width: config.sw(100),
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            color: XColors.primaryColor,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Center(
-                            child: NormalText(
-                              text:"Education",
-                              textColor: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                        child: Container(
-                          height: config.sh(30),
-                          width: config.sw(100),
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            color: XColors.primaryColor,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Center(
-                            child: NormalText(
-                              text:"Children",
-                              textColor: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    children: catalogWidget,
                   ),
                 ),
                 YMargin(20),
@@ -170,9 +86,28 @@ class _HomePageState extends State<HomePage> {
                   textColor: Colors.black.withOpacity(0.5),
                 ),
                 YMargin(20),
+                FutureBuilder(
+                    future: getProduct.getList("electronics"),
+                    builder: (context, snapshot){
+                  if(snapshot.hasData){
+                    ProductList pro = snapshot.data;
+                    return ListView.builder(
+                        itemCount: pro.list.length,
+                        itemBuilder: (context, index){
+                      return HomePageWidget(
+                        image: pro.list[index].image,
+                        cost: pro.list[index].price.toString(),
+                      );
+                    });
+                  }
+                  else{
+                    return Container();
+                  }
+                }),
                 Container(
                   height: config.sh(200),
-                  child: ListView.builder(itemBuilder: (BuildContext context, index){
+                  child: ListView.builder(
+                    itemBuilder: (BuildContext context, index){
                     return HomePageWidget();
                   },
                   scrollDirection: Axis.horizontal,

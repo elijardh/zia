@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:zia/Domain/user_Model.dart';
 import 'package:zia/Presentation/Pages/HomePage/HomePage.dart';
+import 'package:zia/data/network/FireBase/Register/RegFire.dart';
 import 'package:zia/utils/colors.dart';
 import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:zia/widgets/button.dart';
+import 'package:zia/widgets/snackbar.dart';
 import 'package:zia/widgets/text_field.dart';
 import 'package:zia/widgets/text_field_underline.dart';
 import 'package:zia/widgets/texts.dart';
@@ -22,18 +25,18 @@ class _RegisterState extends State<Register> {
   final TextEditingController email = new TextEditingController();
   final TextEditingController password = new TextEditingController();
   final TextEditingController phoneNumber = new TextEditingController();
-
-  FocusNode _fullName = new FocusNode();
-
-  FocusNode _email = new FocusNode();
-  FocusNode _password = new FocusNode();
-  FocusNode _phoneNumber = new FocusNode();
-
   final GlobalKey<FormState> _formKey = new GlobalKey();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
 
   void regUser() async{
-    await Firebase.initializeApp();
-    print(email.value.text);
+    UserModel userModel = new UserModel(
+      pass: password.value.text,
+      email: email.value.text,
+      fullName: fullName.text,
+      phoneNumber: phoneNumber.text,
+    );
+    RegisterClass.register(userModel, _scaffoldKey, context);
+/*    print(email.value.text);
       try{
         UserCredential user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email.value.text, password: password.value.text);
         FirebaseFirestore.instance.collection("users").doc().set(
@@ -41,8 +44,16 @@ class _RegisterState extends State<Register> {
         navigate(context, HomePage(name: email.text,));
       }
       catch(error){
+        final snackBar = SnackBar(
+          content: Text(error.toString()),
+          backgroundColor: Colors.blue,
+          duration: Duration(
+              seconds: 5
+          ),
+        );
+        _scaffoldKey.currentState.showSnackBar(snackBar);
         print(error.toString());
-      }
+      }*/
 
   }
 
@@ -51,6 +62,7 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        key: _scaffoldKey,
         body: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 20),

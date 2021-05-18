@@ -70,11 +70,11 @@ class _OnBoardingState extends State<OnBoarding> {
                       setState(() {
                         currindex = int;
                       });
-/*                      if (int == 2) {
+                      if (int == 2) {
                         Timer(Duration(seconds: 2), () {
                           navigateReplace(context, BridgePage());
                         });
-                      }*/
+                      }
                     },
                     itemCount: onBoardingElement.length,
                     layout: SwiperLayout.DEFAULT,
