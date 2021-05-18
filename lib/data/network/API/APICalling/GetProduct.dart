@@ -13,6 +13,7 @@ class GetProducts{
     var response = await http.get(url);
     if(response.statusCode == 200){
       ProductList productList = ProductList.fromJson(json.decode(response.body));
+      print(productList.list[0].price);
       return productList;
     }
   }

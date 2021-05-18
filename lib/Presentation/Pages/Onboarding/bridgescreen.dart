@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zia/Presentation/Pages/LoginPage/login.dart';
 import 'package:zia/Presentation/Pages/RegisterPage/Register.dart';
 import 'package:zia/utils/colors.dart';
 import 'package:zia/utils/navigator.dart';
@@ -60,6 +61,9 @@ class _BridgePageState extends State<BridgePage> {
                 YMargin(30),
                 XButton(
                   text: "LOG IN",
+                  onClick: (){
+                    navigate(context,LoginPage());
+                  },
                   textColor: Colors.white,
                   width: SizeConfig.screenWidthDp,
                   radius: 5,

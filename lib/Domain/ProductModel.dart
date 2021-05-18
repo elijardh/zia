@@ -3,7 +3,7 @@ class ProductModel {
     String description;
     int id;
     String image;
-    double price;
+    Object price;
     String title;
 
     ProductModel({this.category, this.description, this.id, this.image, this.price, this.title});
@@ -14,7 +14,7 @@ class ProductModel {
             description: json['description'], 
             id: json['id'], 
             image: json['image'], 
-            price: json['price'], 
+            price: json['price'] is double ? (json['price'] as double).toInt() : json['price'] as int,
             title: json['title'], 
         );
     }

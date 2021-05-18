@@ -16,12 +16,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   List<Catalogs> catalogWidget = [
     Catalogs(catalogTitle: "Electronics",),
     Catalogs(catalogTitle: "Jewelery",),
     Catalogs(catalogTitle: "Men Clothing",),
     Catalogs(catalogTitle: "Women Clothing",),
   ];
+
+  @override
+  void initState(){
+    super.initState();
+    var hello = test();
+    print(hello.toString());
+  }
+
+  Future<dynamic>test() async{
+    return await getProduct.getList("electronics");
+  }
+
   final String name;
   _HomePageState({this.name});
   GetProducts getProduct = new GetProducts();
@@ -86,24 +99,28 @@ class _HomePageState extends State<HomePage> {
                   textColor: Colors.black.withOpacity(0.5),
                 ),
                 YMargin(20),
-                FutureBuilder(
-                    future: getProduct.getList("electronics"),
-                    builder: (context, snapshot){
-                  if(snapshot.hasData){
-                    ProductList pro = snapshot.data;
-                    return ListView.builder(
-                        itemCount: pro.list.length,
-                        itemBuilder: (context, index){
-                      return HomePageWidget(
-                        image: pro.list[index].image,
-                        cost: pro.list[index].price.toString(),
-                      );
-                    });
-                  }
-                  else{
-                    return Container();
-                  }
-                }),
+                Container(
+                  height: config.sh(200),
+                  child: FutureBuilder(
+                      future: getProduct.getList("electronics"),
+                      builder: (context, snapshot){
+                    if(snapshot.hasData){
+                      ProductList pro = snapshot.data;
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                          itemCount: pro.list.length,
+                          itemBuilder: (context, index){
+                        return HomePageWidget(
+                          image: pro.list[index].image,
+                          cost: pro.list[index].price.toString(),
+                        );
+                      });
+                    }
+                    else{
+                      return Container();
+                    }
+                  }),
+                ),
                 Container(
                   height: config.sh(200),
                   child: ListView.builder(

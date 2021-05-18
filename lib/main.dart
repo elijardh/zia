@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         BuildEnvironment.init(flavor: BuildFlavor.development);
         Size size = MediaQuery.of(context).size;
         SizeConfig.init(context, width: size.width, height: size.height, allowFontScaling: true);
-        return SplashScreen();
+        return HomePage();
       }),
     );
   }

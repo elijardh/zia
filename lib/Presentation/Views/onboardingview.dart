@@ -5,15 +5,27 @@ import 'package:zia/widgets/texts.dart';
 import 'package:zia/widgets/y_margin.dart';
 
 class OnBoardingView extends StatelessWidget {
+
   final String text;
+
   final String splashTitle;
+
   final String imageString;
+
   OnBoardingView({this.text,this.imageString, this.splashTitle});
+
   @override
+
   Widget build(BuildContext context) {
+
+    //Blind superman look closely u dumb fuck!!!!!!!!!!!
+
     return Container(
+
       padding: EdgeInsets.symmetric(horizontal: 20),
+
       width: 200,
+
       decoration: BoxDecoration(
         color: Colors.white,),
       child: Column(

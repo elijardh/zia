@@ -1,13 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zia/Domain/user_Model.dart';
+import 'package:zia/Presentation/Pages/HomePage/HomePage.dart';
+import 'package:zia/utils/navigator.dart';
 
 class Login{
 
-  static LoginFunc(UserModel userModel, BuildContext context, GlobalKey<ScaffoldState> _scaffold) async{
+  static loginFunc(UserModel userModel, BuildContext context, GlobalKey<ScaffoldState> _scaffold) async{
 
     try{
       var user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: userModel.email, password: userModel.pass);
+      navigate(context, HomePage(
+        name: userModel.fullName,
+      ));
 
     }
     on FirebaseAuthException catch(error){

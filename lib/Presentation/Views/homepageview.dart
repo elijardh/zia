@@ -17,14 +17,14 @@ class HomePageWidget extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           image: DecorationImage(
-            image: image.isEmpty? NetworkImage(image) : AssetImage("assets/images/shopitem.png"),
+            image: image != null ? NetworkImage(image) : AssetImage("assets/images/shopitem.png"),
             fit: BoxFit.fill,
           ),
         ),
         child: Align(
           alignment: Alignment.bottomCenter,
           child: NormalText(
-            text: cost.isEmpty? cost: "N/A",
+            text: cost != null ? cost: "N/A",
             textColor: Colors.black,
           ),
         ),
