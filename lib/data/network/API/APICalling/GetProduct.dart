@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:zia/Domain/ProductListModel.dart';
 import 'package:zia/Domain/ProductModel.dart';
 import 'package:zia/data/network/API/API%20Url/Urls.dart';
