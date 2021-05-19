@@ -5,7 +5,6 @@ import 'package:zia/data/network/API/API%20Url/Urls.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-
 class GetProducts{
   Future<ProductList> getList(String category) async{
     var url = Urls.categoryLink+category;

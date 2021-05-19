@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zia/Domain/ProductListModel.dart';
+import 'package:zia/Presentation/ViewModel/HomePageViewModel/HomePageViewModel.dart';
 import 'package:zia/Presentation/Views/Catalog.dart';
 import 'package:zia/Presentation/Views/homepageview.dart';
 import 'package:zia/data/network/API/APICalling/GetProduct.dart';
@@ -23,18 +25,14 @@ class _HomePageState extends State<HomePage> {
     Catalogs(catalogTitle: "Men Clothing",),
     Catalogs(catalogTitle: "Women Clothing",),
   ];
-
   @override
   void initState(){
     super.initState();
-    var hello = test();
-    print(hello.toString());
+    context.read<HomePageViewModel>().getList("electronics");
   }
-
   Future<dynamic>test() async{
     return await getProduct.getList("electronics");
   }
-
   final String name;
   _HomePageState({this.name});
   GetProducts getProduct = new GetProducts();
@@ -101,35 +99,23 @@ class _HomePageState extends State<HomePage> {
                 YMargin(20),
                 Container(
                   height: config.sh(200),
-                  child: FutureBuilder(
-                      future: getProduct.getList("electronics"),
-                      builder: (context, snapshot){
-                    if(snapshot.hasData){
-                      ProductList pro = snapshot.data;
-                      return ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                          itemCount: pro.list.length,
-                          itemBuilder: (context, index){
-                        return HomePageWidget(
-                          image: pro.list[index].image,
-                          cost: pro.list[index].price.toString(),
-                        );
-                      });
-                    }
-                    else{
-                      return Container();
-                    }
-                  }),
-                ),
-                Container(
-                  height: config.sh(200),
-                  child: ListView.builder(
-                    itemBuilder: (BuildContext context, index){
-                    return HomePageWidget();
-                  },
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 8,
-                  ),
+                  child: Consumer<HomePageViewModel>(
+                    builder: (context, notifier,child){
+                      if(notifier.pList != null){
+                        return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: notifier.pList.list.length,
+                            itemBuilder: (context, index){
+                              return HomePageWidget(
+                                image: notifier.pList.list[index].image,
+                                cost: notifier.pList.list[index].price.toString(),
+                              );
+                            });
+                      }
+                      else{
+                        return Container();
+                      }
+                  },),
                 ),
                 YMargin(10),
                 Row(
