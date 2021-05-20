@@ -27,12 +27,11 @@ class _CatalogsState extends State<Catalogs> {
   final SizeConfig config = new SizeConfig();
   @override
   Widget build(BuildContext context) {
-
     var  test = context.watch<CatalogVM>().currIndex;
-
     return InkWell(
       onTap: (){
         context.read<CatalogVM>().update(widget.index);
+        context.read<HomePageViewModel>().getList(widget.catalogTitle.toLowerCase());
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -41,13 +40,13 @@ class _CatalogsState extends State<Catalogs> {
             width: config.sw(100),
             padding: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-              color: test == widget.index ? XColors.primaryColor : Colors.black,
+              color: test == widget.index ? XColors.primaryColor : Colors.white,
               borderRadius: BorderRadius.circular(30),
             ),
             child: Center(
               child: NormalText(
                 text:widget.catalogTitle,
-                textColor: Colors.white,
+                textColor: test == widget.index ? Colors.white : Colors.black,
                 maxLines: 2,
                 fontSize: 10,
                 fontWeight: FontWeight.bold,

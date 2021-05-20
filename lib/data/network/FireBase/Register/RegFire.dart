@@ -8,7 +8,8 @@ import 'package:zia/utils/navigator.dart';
 class RegisterClass {
   static register(UserModel user, GlobalKey<ScaffoldState> _scaffold, BuildContext context) async{
     try{
-      UserCredential RegUser = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: user.email, password: user.pass);
+      UserCredential RegUser = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: user.email, password: user.pass,);
+      FirebaseAuth.instance.currentUser;
       FirebaseFirestore.instance.collection("users").doc().set(
         {"email": user.email, "phoneNumber": user.phoneNumber},);
       navigate(context, HomePage(name: user.email,));

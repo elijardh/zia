@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zia/Domain/ProductListModel.dart';
@@ -5,6 +6,7 @@ import 'package:zia/Presentation/ViewModel/HomePageViewModel/HomePageViewModel.d
 import 'package:zia/Presentation/Views/Catalog.dart';
 import 'package:zia/Presentation/Views/homepageview.dart';
 import 'package:zia/data/network/API/APICalling/GetProduct.dart';
+import 'package:zia/data/network/FireBase/User/fire_user.dart';
 import 'package:zia/utils/colors.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:zia/widgets/texts.dart';
@@ -14,22 +16,21 @@ class HomePage extends StatefulWidget {
   final String name;
   HomePage({this.name});
   @override
-  _HomePageState createState() => _HomePageState(name: name);
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
 
-  List<String> catalogWidget = ["Electronics","Jewelery","Men Clothing","Women Clothing",];
+  User user;
+  List<String> catalogWidget = ["Electronics","Jewelery","Men's Clothing","Women's Clothing",];
   @override
   void initState(){
     super.initState();
     context.read<HomePageViewModel>().getList("electronics");
+    FireUser fireUser = new FireUser();
+    user = fireUser.getUser();
   }
-  Future<dynamic>test() async{
-    return await getProduct.getList("electronics");
-  }
-  final String name;
-  _HomePageState({this.name});
+
   GetProducts getProduct = new GetProducts();
   SizeConfig config = new SizeConfig();
   @override
@@ -67,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                         shape: BoxShape.circle,
                       ),
                       child: NormalText(
-                        text: "Dare",
+                        text: user.displayName,
                       ), /*Icon(Icons.person, color: Colors.black,)*/
                     ),
                   ],
