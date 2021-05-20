@@ -19,12 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  List<Catalogs> catalogWidget = [
-    Catalogs(catalogTitle: "Electronics",),
-    Catalogs(catalogTitle: "Jewelery",),
-    Catalogs(catalogTitle: "Men Clothing",),
-    Catalogs(catalogTitle: "Women Clothing",),
-  ];
+  List<String> catalogWidget = ["Electronics","Jewelery","Men Clothing","Women Clothing",];
   @override
   void initState(){
     super.initState();
@@ -81,9 +76,15 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   height: config.sh(35),
                   width: SizeConfig.screenWidthDp,
-                  child: ListView(
+                  child: ListView.builder(
+                    itemCount: catalogWidget.length,
+                    itemBuilder: (context, index){
+                      return Catalogs(
+                        catalogTitle: catalogWidget[index],
+                        index: index,
+                      );
+                    },
                     scrollDirection: Axis.horizontal,
-                    children: catalogWidget,
                   ),
                 ),
                 YMargin(20),
@@ -106,10 +107,7 @@ class _HomePageState extends State<HomePage> {
                             scrollDirection: Axis.horizontal,
                             itemCount: notifier.pList.list.length,
                             itemBuilder: (context, index){
-                              return HomePageWidget(
-                                image: notifier.pList.list[index].image,
-                                cost: notifier.pList.list[index].price.toString(),
-                              );
+                              return HomePageWidget(model: notifier.pList.list[index],);
                             });
                       }
                       else{
