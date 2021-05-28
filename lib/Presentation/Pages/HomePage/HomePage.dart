@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zia/Domain/ProductListModel.dart';
@@ -20,7 +21,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
+  String name;
   User user;
   List<String> catalogWidget = ["Electronics","Jewelery","Men's Clothing","Women's Clothing",];
   @override
@@ -29,6 +30,24 @@ class _HomePageState extends State<HomePage> {
     context.read<HomePageViewModel>().getList("electronics");
     FireUser fireUser = new FireUser();
     user = fireUser.getUser();
+    setState(() {
+      name = hello();
+      print(name);
+    });
+  }
+
+  String hello(){
+    FirebaseFirestore.instance.collection("users")
+        .where("email", isEqualTo: user.email)
+        .limit(1)
+        .get().then((value) {
+       if(value.docs.length > 0){
+         Map<String, dynamic> name = value.docs[0].data();
+         String hell = name["email"];
+         return hell;
+       }
+    });
+    return null;
   }
 
   GetProducts getProduct = new GetProducts();
@@ -68,7 +87,8 @@ class _HomePageState extends State<HomePage> {
                         shape: BoxShape.circle,
                       ),
                       child: NormalText(
-                        text: user.displayName,
+                        text: name != null ? name : "hello",
+                        textColor: Colors.black,
                       ), /*Icon(Icons.person, color: Colors.black,)*/
                     ),
                   ],
@@ -112,7 +132,13 @@ class _HomePageState extends State<HomePage> {
                             });
                       }
                       else{
-                        return Container();
+                        return Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("assets/images/loading.gif"),
+                            )
+                          ),
+                        );
                       }
                   },),
                 ),
