@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:zia/Domain/ProductListModel.dart';
 import 'package:zia/Domain/user_Model.dart';
 import 'package:zia/Presentation/Pages/menu/menu.dart';
+import 'package:zia/Presentation/Pages/product_info/product_info.dart';
 import 'package:zia/Presentation/ViewModel/HomePageViewModel/HomePageViewModel.dart';
 import 'package:zia/Presentation/Views/Catalog.dart';
 import 'package:zia/Presentation/Views/homepageview.dart';
@@ -96,9 +97,14 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                         ),
-                        child: FadeInImage(
-                          placeholder: AssetImage("assets/images/userPH.png"),
-                          image: NetworkImage(""),
+                        child: InkWell(
+                          onTap: (){
+                            navigate(context, Menu());
+                          },
+                          child: FadeInImage(
+                            placeholder: AssetImage("assets/images/userPH.png"),
+                            image: NetworkImage(""),
+                          ),
                         )
                       ),
                     ),
@@ -139,7 +145,13 @@ class _HomePageState extends State<HomePage> {
                             scrollDirection: Axis.horizontal,
                             itemCount: notifier.pList.list.length,
                             itemBuilder: (context, index){
-                              return HomePageWidget(model: notifier.pList.list[index],);
+                              return InkWell(
+                                  onTap: (){
+                                    navigate(context, ProductInfo(
+                                      model: notifier.pList.list[index],
+                                    ));
+                                  },
+                                  child: HomePageWidget(model: notifier.pList.list[index],));
                             });
                       }
                       else{
