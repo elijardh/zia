@@ -3,12 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zia/Domain/ProductListModel.dart';
+import 'package:zia/Domain/user_Model.dart';
+import 'package:zia/Presentation/Pages/menu/menu.dart';
 import 'package:zia/Presentation/ViewModel/HomePageViewModel/HomePageViewModel.dart';
 import 'package:zia/Presentation/Views/Catalog.dart';
 import 'package:zia/Presentation/Views/homepageview.dart';
 import 'package:zia/data/network/API/APICalling/GetProduct.dart';
 import 'package:zia/data/network/FireBase/User/fire_user.dart';
 import 'package:zia/utils/colors.dart';
+import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:zia/widgets/texts.dart';
 import 'package:zia/widgets/y_margin.dart';
@@ -22,21 +25,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String name;
-  User user;
+  UserModel user;
   List<String> catalogWidget = ["Electronics","Jewelery","Men's Clothing","Women's Clothing",];
   @override
   void initState(){
     super.initState();
     context.read<HomePageViewModel>().getList("electronics");
-    FireUser fireUser = new FireUser();
-    user = fireUser.getUser();
-    setState(() {
-      name = hello();
-      print(name);
-    });
+    test();
+    //print(user.fullName);
   }
 
-  String hello(){
+  Future<void> test() async{
+    FireUser fireUser = new FireUser();
+    user = await fireUser.getUser();
+  }
+
+/*  String hello(){
     FirebaseFirestore.instance.collection("users")
         .where("email", isEqualTo: user.email)
         .limit(1)
@@ -48,7 +52,7 @@ class _HomePageState extends State<HomePage> {
        }
     });
     return null;
-  }
+  }*/
 
   GetProducts getProduct = new GetProducts();
   SizeConfig config = new SizeConfig();
@@ -80,16 +84,23 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    Container(
-                      height: config.sh(50),
-                      width: config.sw(50),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
+                    InkWell(
+                      onTap: (){
+                        navigate(context, Menu(
+                          model: user,
+                        ));
+                      },
+                      child: Container(
+                        height: config.sh(50),
+                        width: config.sw(50),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: FadeInImage(
+                          placeholder: AssetImage("assets/images/userPH.png"),
+                          image: NetworkImage(""),
+                        )
                       ),
-                      child: NormalText(
-                        text: name != null ? name : "hello",
-                        textColor: Colors.black,
-                      ), /*Icon(Icons.person, color: Colors.black,)*/
                     ),
                   ],
                 ),
@@ -110,7 +121,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 YMargin(20),
                 TitleText(
-                  text: "Trending!",
+                  text: "Trending!!!",
                   textColor: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),

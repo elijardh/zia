@@ -11,7 +11,7 @@ class RegisterClass {
       UserCredential regUser = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: user.email, password: user.pass,);
       FirebaseAuth.instance.currentUser;
       FirebaseFirestore.instance.collection("users").doc(regUser.user.uid).set(
-        {"email": user.email, "phoneNumber": user.phoneNumber},);
+        {"email": user.email, "phoneNumber": user.phoneNumber, "fullname": user.fullName},);
       navigate(context, HomePage(name: user.email,));
     }
     catch(error){
