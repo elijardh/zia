@@ -27,164 +27,172 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String name;
   UserModel user;
-  List<String> catalogWidget = ["Electronics","Jewelery","Men's Clothing","Women's Clothing",];
+  List<String> catalogWidget = [
+    "Electronics",
+    "Jewelery",
+    "Men's Clothing",
+    "Women's Clothing",
+  ];
   @override
-  void initState(){
+  void initState() {
     super.initState();
+    print("test");
     context.read<HomePageViewModel>().getList("electronics");
     test();
     //print(user.fullName);
   }
 
-  Future<void> test() async{
+  Future<void> test() async {
     FireUser fireUser = new FireUser();
     user = await fireUser.getUser();
   }
 
-/*  String hello(){
-    FirebaseFirestore.instance.collection("users")
-        .where("email", isEqualTo: user.email)
-        .limit(1)
-        .get().then((value) {
-       if(value.docs.length > 0){
-         Map<String, dynamic> name = value.docs[0].data();
-         String hell = name["email"];
-         return hell;
-       }
-    });
-    return null;
-  }*/
-
-  GetProducts getProduct = new GetProducts();
   SizeConfig config = new SizeConfig();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child:Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child:Container(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            height: SizeConfig.screenHeightDp,
-            width: SizeConfig.screenWidthDp,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        child: Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+          child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        height: SizeConfig.screenHeightDp,
+        width: SizeConfig.screenWidthDp,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            YMargin(30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                YMargin(30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset("assets/images/ziaIcon.png", scale: 2.5,),
-                        NormalText(
-                          text: "When we said diverse catalogs, we meant it",
-                          textColor: Colors.black,
-                          fontSize: 12,
-                        ),
-                      ],
+                    Image.asset(
+                      "assets/images/ziaIcon.png",
+                      scale: 2.5,
                     ),
-                    InkWell(
-                      onTap: (){
-                        navigate(context, Menu(
+                    NormalText(
+                      text: "When we said diverse catalogs, we meant it",
+                      textColor: Colors.black,
+                      fontSize: 12,
+                    ),
+                  ],
+                ),
+                InkWell(
+                  onTap: () {
+                    navigate(
+                        context,
+                        Menu(
                           model: user,
                         ));
-                      },
-                      child: Container(
-                        height: config.sh(50),
-                        width: config.sw(50),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: InkWell(
-                          onTap: (){
-                            navigate(context, Menu());
-                          },
-                          child: FadeInImage(
-                            placeholder: AssetImage("assets/images/userPH.png"),
-                            image: NetworkImage(""),
-                          ),
-                        )
+                  },
+                  child: Container(
+                      height: config.sh(50),
+                      width: config.sw(50),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
                       ),
-                    ),
-                  ],
+                      child: InkWell(
+                        onTap: () {
+                          navigate(context, Menu());
+                        },
+                        child: FadeInImage(
+                          placeholder: AssetImage("assets/images/userPH.png"),
+                          image: NetworkImage(
+                              "https://static.wikia.nocookie.net/kubera/images/3/3a/3-188_Yaksha.png/revision/latest/scale-to-width-down/310?cb=20210413055331",
+                              scale: 2),
+                        ),
+                      )),
                 ),
-                YMargin(25),
-                Container(
-                  height: config.sh(35),
-                  width: SizeConfig.screenWidthDp,
-                  child: ListView.builder(
-                    itemCount: catalogWidget.length,
-                    itemBuilder: (context, index){
-                      return Catalogs(
-                        catalogTitle: catalogWidget[index],
-                        index: index,
-                      );
-                    },
-                    scrollDirection: Axis.horizontal,
-                  ),
-                ),
-                YMargin(20),
-                TitleText(
-                  text: "Trending!!!",
-                  textColor: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-                NormalText(
-                  text: "Here are trending items under this Category",
-                  textColor: Colors.black.withOpacity(0.5),
-                ),
-                YMargin(20),
-                Container(
-                  height: config.sh(200),
-                  child: Consumer<HomePageViewModel>(
-                    builder: (context, notifier,child){
-                      if(notifier.pList != null){
-                        return ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: notifier.pList.list.length,
-                            itemBuilder: (context, index){
-                              return InkWell(
-                                  onTap: (){
-                                    navigate(context, ProductInfo(
-                                      model: notifier.pList.list[index],
-                                    ));
-                                  },
-                                  child: HomePageWidget(model: notifier.pList.list[index],));
-                            });
-                      }
-                      else{
-                        return Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("assets/images/loading.gif"),
-                            )
-                          ),
-                        );
-                      }
-                  },),
-                ),
-                YMargin(10),
-                Row(
-                  children: [
-                    NormalText(
-                      text:"Yeah, you wanna see more cool stuff?",
-                      textColor: Colors.black.withOpacity(0.5),
-                    ),
-                    NormalText(
-                      text: "Get Premium",
-                      textColor: XColors.primaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ],
-                ),
-                YMargin(10),
               ],
             ),
-          )
+            YMargin(25),
+            Container(
+              height: config.sh(35),
+              width: SizeConfig.screenWidthDp,
+              child: ListView.builder(
+                itemCount: catalogWidget.length,
+                itemBuilder: (context, index) {
+                  return Catalogs(
+                    catalogTitle: catalogWidget[index],
+                    index: index,
+                  );
+                },
+                scrollDirection: Axis.horizontal,
+              ),
+            ),
+            YMargin(20),
+            TitleText(
+              text: "Trending!!!",
+              textColor: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+            NormalText(
+              text: "Here are trending items under this Category",
+              textColor: Colors.black.withOpacity(0.5),
+            ),
+            YMargin(20),
+            Container(
+              height: config.sh(200),
+              child: Consumer<HomePageViewModel>(
+                builder: (context, notifier, child) {
+                  if (notifier.error == true) {
+                    return Container(
+                      child: Center(
+                        child: NormalText(
+                          text: "ERROR",
+                          textColor: Colors.red,
+                        ),
+                      ),
+                    );
+                  }
+                  if (notifier.pList != null) {
+                    return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: notifier.pList.list.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                              onTap: () {
+                                navigate(
+                                    context,
+                                    ProductInfo(
+                                      model: notifier.pList.list[index],
+                                    ));
+                              },
+                              child: HomePageWidget(
+                                model: notifier.pList.list[index],
+                              ));
+                        });
+                  } else {
+                    return Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                        image: AssetImage("assets/images/loading.gif"),
+                      )),
+                    );
+                  }
+                },
+              ),
+            ),
+            YMargin(10),
+            Row(
+              children: [
+                NormalText(
+                  text: "Yeah, you wanna see more cool stuff?",
+                  textColor: Colors.black.withOpacity(0.5),
+                ),
+                NormalText(
+                  text: "Get Premium",
+                  textColor: XColors.primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ],
+            ),
+            YMargin(10),
+          ],
         ),
-      )
-    );
+      )),
+    ));
   }
 }
