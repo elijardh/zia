@@ -21,7 +21,6 @@ class OnBoarding extends StatefulWidget {
 }
 
 class _OnBoardingState extends State<OnBoarding> {
-
   int currindex = 0;
   final SizeConfig config = new SizeConfig();
   void pageChange() {
@@ -33,18 +32,21 @@ class _OnBoardingState extends State<OnBoarding> {
   final SwiperController controller = new SwiperController();
   List<Widget> onBoardingElement = [
     OnBoardingView(
-      text: "We provide you with end-to-end security, making sure all your transactions are encrypted with ourpatented SHA-256 algorithm and hosted on theblockchain.",
+      text:
+          "We provide you with end-to-end security, making sure all your transactions are encrypted with ourpatented SHA-256 algorithm and hosted on theblockchain.",
       splashTitle: "You're secure!",
       imageString: "assets/images/onboarding1.png",
     ),
     OnBoardingView(
-      text: "Zia offers you a sure money-back gurantee if your ordered product does not reach your doorstep with 59 seconds. You think that’s crazy? Watch us!",
+      text:
+          "Zia offers you a sure money-back gurantee if your ordered product does not reach your doorstep with 59 seconds. You think that’s crazy? Watch us!",
       splashTitle: "Delivery in seconds",
       imageString: "assets/images/onboarding2.png",
     ),
     OnBoardingView(
       splashTitle: "Diverse catalog",
-      text: "We can gurantee a catalog of products that is so diverse it’ll put Hollywood and Silicon Valley companies to shame.",
+      text:
+          "We can gurantee a catalog of products that is so diverse it’ll put Hollywood and Silicon Valley companies to shame.",
       imageString: "assets/images/onboarding3.png",
     ),
   ];
@@ -65,16 +67,17 @@ class _OnBoardingState extends State<OnBoarding> {
                   child: Swiper(
                     controller: controller,
                     autoplay: true,
+                    loop: true,
                     scrollDirection: Axis.horizontal,
                     onIndexChanged: (int) {
                       setState(() {
                         currindex = int;
                       });
-                      if (int == 2) {
+/*                      if (int == 2) {
                         Timer(Duration(seconds: 2), () {
                           navigateReplace(context, BridgePage());
                         });
-                      }
+                      }*/
                     },
                     itemCount: onBoardingElement.length,
                     layout: SwiperLayout.DEFAULT,
@@ -95,7 +98,8 @@ class _OnBoardingState extends State<OnBoarding> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children:  List<Widget>.generate(onBoardingElement.length, (int index){
+                  children: List<Widget>.generate(onBoardingElement.length,
+                      (int index) {
                     return CustomDotWidget(
                       index: index,
                       currentIndex: currindex,
@@ -105,16 +109,18 @@ class _OnBoardingState extends State<OnBoarding> {
                       activeSize: 200,
                       active: XColors.primaryColor,
                       inactive: XColors.primaryColor.withOpacity(0.5),
-
                     );
                   }),
                 ),
                 YMargin(40),
                 XButton(
-                  text: controller.index == 2 ? "Done" : "Next",
+                  onClick: () {
+                    navigateReplace(context, BridgePage());
+                  },
+                  text: 'NEXT',
                   buttonColor: XColors.primaryColor,
                   textColor: Colors.white,
-                  radius: 10,
+                  radius: 5,
                   width: config.sw(400),
                 ),
                 YMargin(20),

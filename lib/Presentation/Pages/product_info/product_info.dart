@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:zia/Domain/ProductModel.dart';
+import 'package:zia/Domain/cartModel.dart';
 import 'package:zia/utils/colors.dart';
 import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:zia/widgets/button.dart';
 import 'package:zia/widgets/texts.dart';
 import 'package:zia/widgets/y_margin.dart';
+import 'package:zia/data/local/database/database.dart';
 
 class ProductInfo extends StatefulWidget {
   final ProductModel model;
@@ -16,17 +18,38 @@ class ProductInfo extends StatefulWidget {
 }
 
 class _ProductInfoState extends State<ProductInfo> {
+  DatabaseProvider databaseProvider;
+
+  addToCart() {
+    CartModel cartMod = CartModel(
+        id: widget.model.id,
+        amount: widget.model.price,
+        price: widget.model.price,
+        name: widget.model.title);
+
+    databaseProvider.addToCart(cartMod);
+    Future.delayed(Duration(seconds: 5), () {
+      databaseProvider.getCart().then((value) {
+        print(value[0].name);
+      });
+    });
+  }
+
   SizeConfig config = SizeConfig();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
           bottomSheet: XButton(
+            onClick: () {
+              addToCart();
+            },
             text: "ADD T0 CART",
             textColor: Colors.white,
             height: config.sh(50),
             width: SizeConfig.screenWidthDp,
             buttonColor: XColors.primaryColor,
+            radius: 0,
           ),
           body: NestedScrollView(
             floatHeaderSlivers: true,

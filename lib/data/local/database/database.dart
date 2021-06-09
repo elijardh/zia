@@ -56,7 +56,7 @@ class DatabaseProvider {
     dbClient.rawDelete("Delete * from cart");
   }
 
-  getCart() async {
+  Future<List<CartModel>> getCart() async {
     final dbClient = await db;
     var res = await dbClient.query("cart");
     List<CartModel> list =

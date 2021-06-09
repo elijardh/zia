@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final GlobalKey<ScaffoldState> _scaffold = new GlobalKey();
 
-  login(){
+  login() {
     UserModel userModel = new UserModel(
       phoneNumber: "",
       fullName: "",
@@ -46,15 +46,16 @@ class _LoginPageState extends State<LoginPage> {
                   textColor: XColors.primaryColor,
                 ),
                 NormalText(
-                  text: "We’d say it’s good to have you back but why did you leave in the first place?",
+                  text:
+                      "We’d say it’s good to have you back but why did you leave in the first place?",
+                  maxLines: 3,
                   textColor: XColors.primaryColor,
                 ),
                 YMargin(40),
                 NormalText(
-                  text: "Email Address" ,
+                  text: "Email Address",
                   textColor: Colors.black,
                 ),
-                YMargin(20),
                 EUnderLineButton(
                   controller: email,
                   obscureText: false,
@@ -77,14 +78,13 @@ class _LoginPageState extends State<LoginPage> {
                   fillColor: XColors.primaryColor.withOpacity(0.2),
                   enabledBorderColor: XColors.primaryColor,
                   focusedBorderColor: XColors.primaryColor,
-                  validator: (String val){
+                  validator: (String val) {
                     PasswordValidiator();
                   },
                 ),
-
                 YMargin(150),
                 XButton(
-                  onClick: (){
+                  onClick: () {
                     login();
                   },
                   text: "Login",
