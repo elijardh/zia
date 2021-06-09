@@ -18,8 +18,11 @@ void main() async {
   String mail = pref.get("email");
   runApp(MultiProvider(
       providers: [
-        ChangeNotifierProvider<HomePageViewModel>(create: (_)=> HomePageViewModel()),
-        ChangeNotifierProvider<CatalogVM>(create: (_) => CatalogVM(),)
+        ChangeNotifierProvider<HomePageViewModel>(
+            create: (_) => HomePageViewModel()),
+        ChangeNotifierProvider<CatalogVM>(
+          create: (_) => CatalogVM(),
+        )
       ],
       child: MyApp(
         email: mail,
@@ -33,7 +36,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -44,14 +46,10 @@ class MyApp extends StatelessWidget {
       home: Builder(builder: (BuildContext context) {
         BuildEnvironment.init(flavor: BuildFlavor.development);
         Size size = MediaQuery.of(context).size;
-        SizeConfig.init(context, width: size.width, height: size.height, allowFontScaling: true);
+        SizeConfig.init(context,
+            width: size.width, height: size.height, allowFontScaling: true);
 
-        if(email != null){
-          return HomePage(name: "Dare",);
-        }
-        else{
-          return SplashScreen();
-        }
+        return SplashScreen();
       }),
     );
   }

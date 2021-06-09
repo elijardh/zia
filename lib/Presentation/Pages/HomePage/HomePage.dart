@@ -92,16 +92,11 @@ class _HomePageState extends State<HomePage> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                       ),
-                      child: InkWell(
-                        onTap: () {
-                          navigate(context, Menu());
-                        },
-                        child: FadeInImage(
-                          placeholder: AssetImage("assets/images/userPH.png"),
-                          image: NetworkImage(
-                              "https://static.wikia.nocookie.net/kubera/images/3/3a/3-188_Yaksha.png/revision/latest/scale-to-width-down/310?cb=20210413055331",
-                              scale: 2),
-                        ),
+                      child: FadeInImage(
+                        placeholder: AssetImage("assets/images/userPH.png"),
+                        image: NetworkImage(
+                            "https://static.wikia.nocookie.net/kubera/images/3/3a/3-188_Yaksha.png/revision/latest/scale-to-width-down/310?cb=20210413055331",
+                            scale: 2),
                       )),
                 ),
               ],
