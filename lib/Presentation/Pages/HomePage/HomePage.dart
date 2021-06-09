@@ -43,8 +43,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> test() async {
-    FireUser fireUser = new FireUser();
-    user = await fireUser.getUser();
+    user = await getUser();
   }
 
   SizeConfig config = new SizeConfig();
