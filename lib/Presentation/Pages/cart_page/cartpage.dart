@@ -119,7 +119,24 @@ class _CartPageState extends State<CartPage> {
                       },
                       itemCount: notifier.listModels.length,
                     ),
-                  )
+                  ),
+                  RichText(
+                      text: TextSpan(
+                          text: "Total Price:",
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                          children: [
+                        TextSpan(
+                            text: context
+                                .watch<CartVM>()
+                                .listModels[0]
+                                .price
+                                .toString(),
+                            style: TextStyle(
+                              color: XColors.primaryColor,
+                              fontWeight: FontWeight.bold,
+                            ))
+                      ]))
                 ],
               ),
             );
