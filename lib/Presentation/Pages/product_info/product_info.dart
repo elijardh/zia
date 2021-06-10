@@ -18,8 +18,6 @@ class ProductInfo extends StatefulWidget {
 }
 
 class _ProductInfoState extends State<ProductInfo> {
-  DatabaseProvider databaseProvider;
-
   addToCart() {
     CartModel cartMod = CartModel(
         id: widget.model.id,
@@ -27,9 +25,9 @@ class _ProductInfoState extends State<ProductInfo> {
         price: widget.model.price,
         name: widget.model.title);
 
-    databaseProvider.addToCart(cartMod);
+    DatabaseProvider.instance.addToCart(cartMod);
     Future.delayed(Duration(seconds: 5), () {
-      databaseProvider.getCart().then((value) {
+      DatabaseProvider.instance.getCart().then((value) {
         print(value[0].name);
       });
     });

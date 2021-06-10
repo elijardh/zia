@@ -5,12 +5,12 @@ import 'package:zia/utils/colors.dart';
 import 'package:zia/widgets/texts.dart';
 
 class CartVM extends ChangeNotifier {
-  DatabaseProvider databaseProvider;
   List<CartModel> listModels = [];
 
   addToList(BuildContext context) async {
-    databaseProvider.getCart().then((value) {
+    DatabaseProvider.instance.getCart().then((value) {
       listModels = value;
+      print(listModels[0].name);
       notifyListeners();
     }).onError((error, stackTrace) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
