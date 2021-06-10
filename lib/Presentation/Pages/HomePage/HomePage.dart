@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zia/Domain/ProductListModel.dart';
 import 'package:zia/Domain/user_Model.dart';
+import 'package:zia/Presentation/Pages/cart_page/cartpage.dart';
 import 'package:zia/Presentation/Pages/menu/menu.dart';
 import 'package:zia/Presentation/Pages/product_info/product_info.dart';
 import 'package:zia/Presentation/ViewModel/HomePageViewModel/HomePageViewModel.dart';
@@ -14,6 +15,7 @@ import 'package:zia/data/network/FireBase/User/fire_user.dart';
 import 'package:zia/utils/colors.dart';
 import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
+import 'package:zia/widgets/button.dart';
 import 'package:zia/widgets/texts.dart';
 import 'package:zia/widgets/y_margin.dart';
 
@@ -51,6 +53,15 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+      bottomSheet: XButton(
+        onClick: () => navigate(context, CartPage()),
+        text: "Go to Cart",
+        textColor: Colors.white,
+        height: config.sh(50),
+        width: SizeConfig.screenWidthDp,
+        buttonColor: XColors.primaryColor,
+        radius: 0,
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
           child: Container(

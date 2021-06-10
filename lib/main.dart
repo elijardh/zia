@@ -9,6 +9,7 @@ import 'Presentation/Pages/Onboarding/onboarding.dart';
 import 'Presentation/Pages/Onboarding/splashscreen.dart';
 import 'Presentation/ViewModel/Catalog/CatalogVM.dart';
 import 'Presentation/ViewModel/HomePageViewModel/HomePageViewModel.dart';
+import 'Presentation/ViewModel/cart_vm/cartVM.dart';
 import 'data/network/API/APICalling/GetProduct.dart';
 
 void main() async {
@@ -22,7 +23,8 @@ void main() async {
             create: (_) => HomePageViewModel()),
         ChangeNotifierProvider<CatalogVM>(
           create: (_) => CatalogVM(),
-        )
+        ),
+        ChangeNotifierProvider<CartVM>(create: (_) => CartVM())
       ],
       child: MyApp(
         email: mail,
