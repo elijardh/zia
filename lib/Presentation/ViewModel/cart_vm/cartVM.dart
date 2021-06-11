@@ -32,13 +32,13 @@ class CartVM extends ChangeNotifier {
     }
   }
 
-  increaseAmount(int index){
+  increaseAmount(int index) {
     listModels[index].amount++;
     getTotalCost();
     notifyListeners();
   }
 
-  decreasesAmount(int index){
+  decreasesAmount(int index) {
     listModels[index].amount--;
     getTotalCost();
     notifyListeners();

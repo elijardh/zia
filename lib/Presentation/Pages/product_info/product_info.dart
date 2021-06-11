@@ -26,16 +26,17 @@ class _ProductInfoState extends State<ProductInfo> {
         name: widget.model.title);
 
     DatabaseProvider.instance.addToCart(cartMod).then((value) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: NormalText(
-          text: "Item succesfully added to cart",
-          textColor: Colors.white,
-          fontWeight: FontWeight.bold,
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: NormalText(
+            text: "Item succesfully added to cart",
+            textColor: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+          backgroundColor: XColors.primaryColor,
         ),
-        backgroundColor: XColors.primaryColor,
-      ),
       );
-    }).catchError((e){
+    }).catchError((e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: NormalText(
           text: e.toString(),

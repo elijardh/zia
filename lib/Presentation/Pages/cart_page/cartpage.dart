@@ -128,23 +128,33 @@ class _CartPageState extends State<CartPage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
-                                    "+",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
+                                  GestureDetector(
+                                    onTap: () {
+                                      notifier.increaseAmount(index);
+                                    },
+                                    child: Text(
+                                      "+",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
                                   ),
                                   Text("${notifier.listModels[index].amount}",
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                           color: XColors.primaryColor)),
-                                  Text("-",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black))
+                                  GestureDetector(
+                                    onTap: () {
+                                      notifier.decreasesAmount(index);
+                                    },
+                                    child: Text("-",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black)),
+                                  )
                                 ],
                               ),
                             ),

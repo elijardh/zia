@@ -34,14 +34,12 @@ class DatabaseProvider {
   Future addToCart(CartModel model) async {
     var dbClient = await db;
 
-    if(getItem(model.id) == null){
+    if (getItem(model.id) == null) {
       throw Exception("Item already exist in cart");
-    }
-    else{
+    } else {
       var res = dbClient.insert("cart", model.toJson());
       return res;
     }
-
   }
 
   updateCart(CartModel model) async {
@@ -71,9 +69,9 @@ class DatabaseProvider {
     return list;
   }
 
-  getItem(int id) async{
+  getItem(int id) async {
     final dbClient = await db;
-    var res = await dbClient.query("cart", where: "id = ?", whereArgs:[id]);
+    var res = await dbClient.query("cart", where: "id = ?", whereArgs: [id]);
     return res;
   }
 }
