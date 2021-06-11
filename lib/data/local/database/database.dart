@@ -3,6 +3,7 @@ import 'package:zia/Domain/cartModel.dart';
 
 class DatabaseProvider {
   DatabaseProvider._();
+
   static final DatabaseProvider instance = DatabaseProvider._();
 
   static String name;

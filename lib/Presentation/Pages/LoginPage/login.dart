@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:zia/Domain/user_Model.dart';
+import 'package:zia/Presentation/ViewModel/login_vm/loginvm.dart';
 import 'package:zia/data/network/FireBase/Login/Login.dart';
 import 'package:zia/utils/colors.dart';
 import 'package:zia/utils/size_config.dart';
+import 'package:provider/provider.dart';
 import 'package:zia/widgets/button.dart';
 import 'package:zia/widgets/text_field.dart';
 import 'package:zia/widgets/texts.dart';
@@ -17,23 +19,10 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController email = new TextEditingController();
   final TextEditingController password = new TextEditingController();
 
-  final GlobalKey<ScaffoldState> _scaffold = new GlobalKey();
-
-  login() {
-    UserModel userModel = new UserModel(
-      phoneNumber: "",
-      fullName: "",
-      email: email.text,
-      pass: password.text,
-    );
-    Login.loginFunc(userModel, context, _scaffold);
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        key: _scaffold,
         body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Container(
@@ -85,8 +74,15 @@ class _LoginPageState extends State<LoginPage> {
                 YMargin(150),
                 XButton(
                   onClick: () {
-                    login();
+                    UserModel userModel = new UserModel(
+                      phoneNumber: "",
+                      fullName: "",
+                      email: email.text,
+                      pass: password.text,
+                    );
+                    context.read<LoginVM>().loginVM(userModel, context);
                   },
+                  isLoading: context.watch<LoginVM>().log,
                   text: "Login",
                   textColor: Colors.white,
                   buttonColor: XColors.primaryColor,
