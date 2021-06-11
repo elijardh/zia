@@ -9,14 +9,12 @@ import 'package:zia/widgets/texts.dart';
 class Catalogs extends StatefulWidget {
   final String catalogTitle;
   final int index;
-  int currIndex;
   Catalogs({this.catalogTitle, this.index});
   @override
   _CatalogsState createState() => _CatalogsState();
 }
 
 class _CatalogsState extends State<Catalogs> {
-
   Color color;
   @override
   void initState() {
@@ -27,36 +25,36 @@ class _CatalogsState extends State<Catalogs> {
   final SizeConfig config = new SizeConfig();
   @override
   Widget build(BuildContext context) {
-    var  test = context.watch<CatalogVM>().currIndex;
+    var test = context.watch<CatalogVM>().currIndex;
     return InkWell(
-      onTap: (){
+      onTap: () {
         context.read<CatalogVM>().update(widget.index);
-        context.read<HomePageViewModel>().getList(widget.catalogTitle.toLowerCase());
+        context
+            .read<HomePageViewModel>()
+            .getList(widget.catalogTitle.toLowerCase());
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5.0),
         child: Container(
-            height: 5,
-            width: config.sw(100),
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              color: test == widget.index ? XColors.primaryColor : Colors.white,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Center(
-              child: NormalText(
-                text:widget.catalogTitle,
-                textColor: test == widget.index ? Colors.white : Colors.black,
-                maxLines: 2,
-                fontSize: 9,
-                fontWeight: FontWeight.bold,
-                textAlign: TextAlign.center,
-              ),
+          height: 5,
+          width: config.sw(100),
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          decoration: BoxDecoration(
+            color: test == widget.index ? XColors.primaryColor : Colors.white,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Center(
+            child: NormalText(
+              text: widget.catalogTitle,
+              textColor: test == widget.index ? Colors.white : Colors.black,
+              maxLines: 2,
+              fontSize: 9,
+              fontWeight: FontWeight.bold,
+              textAlign: TextAlign.center,
             ),
           ),
-
+        ),
       ),
     );
   }
 }
-

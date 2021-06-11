@@ -51,8 +51,7 @@ class _HomePageState extends State<HomePage> {
   SizeConfig config = new SizeConfig();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       bottomSheet: XButton(
         onClick: () => navigate(context, CartPage()),
         text: "Go to Cart",
@@ -198,6 +197,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       )),
-    ));
+    );
   }
 }

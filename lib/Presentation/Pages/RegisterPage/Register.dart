@@ -6,7 +6,6 @@ import 'package:zia/utils/colors.dart';
 import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:zia/widgets/button.dart';
-import 'package:zia/widgets/snackbar.dart';
 import 'package:zia/widgets/text_field.dart';
 import 'package:zia/widgets/text_field_underline.dart';
 import 'package:zia/widgets/texts.dart';
@@ -28,7 +27,7 @@ class _RegisterState extends State<Register> {
   final GlobalKey<FormState> _formKey = new GlobalKey();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
 
-  void regUser() async{
+  void regUser() async {
     UserModel userModel = new UserModel(
       pass: password.value.text,
       email: email.value.text,
@@ -54,7 +53,6 @@ class _RegisterState extends State<Register> {
         _scaffoldKey.currentState.showSnackBar(snackBar);
         print(error.toString());
       }*/
-
   }
 
   SizeConfig config = new SizeConfig();
@@ -97,7 +95,8 @@ class _RegisterState extends State<Register> {
                   fontSize: 35,
                 ),
                 NormalText(
-                  text: "Spend reponsibly,(take that advice with a grain of salt)",
+                  text:
+                      "Spend reponsibly,(take that advice with a grain of salt)",
                   textColor: Colors.black.withOpacity(0.6),
                 ),
                 Form(
@@ -134,7 +133,7 @@ class _RegisterState extends State<Register> {
                         fillColor: XColors.primaryColor.withOpacity(0.2),
                         enabledBorderColor: XColors.primaryColor,
                         focusedBorderColor: XColors.primaryColor,
-                        validator: (String val){
+                        validator: (String val) {
                           EmailValiditor();
                         },
                       ),
@@ -153,7 +152,7 @@ class _RegisterState extends State<Register> {
                         fillColor: XColors.primaryColor.withOpacity(0.2),
                         enabledBorderColor: XColors.primaryColor,
                         focusedBorderColor: XColors.primaryColor,
-                        validator: (String val){
+                        validator: (String val) {
                           PasswordValidiator();
                         },
                       ),
@@ -177,7 +176,7 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
                 XButton(
-                  onClick: (){
+                  onClick: () {
                     regUser();
                   },
                   text: "Register",
