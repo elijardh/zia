@@ -59,210 +59,160 @@ class _CartPageState extends State<CartPage> {
         buttonColor: XColors.primaryColor,
         radius: 0,
       ),
-      body: Consumer<CartVM>(
-        builder: (context, notifier, child) {
-          print(notifier.listModels[0].price);
-          if (notifier.listModels.isNotEmpty) {
-            return Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                image: AssetImage(
-                  "assets/images/Doodle.png",
-                ),
-              )),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  RichText(
-                      textAlign: TextAlign.right,
-                      text: TextSpan(
-                          text: "You have ",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: notifier.listModels.length.toString(),
-                              style: TextStyle(
-                                  color: XColors.primaryColor,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            TextSpan(text: " Items in your cart")
-                          ])),
-                  Container(
-                    height: 200,
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(
-                            notifier.listModels[index].name,
-                            maxLines: 1,
-                            softWrap: true,
-                            textScaleFactor: 0.65,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
-                          subtitle: Text(
-                            "£ ${notifier.listModels[index].price.toString()}",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.black.withOpacity(0.5)),
-                          ),
-                          leading: Icon(Icons.shopping_cart),
-                          trailing: Text(
-                              "${notifier.listModels[index].amount.toString()} pieces"),
-                        );
-                      },
-                      itemCount: notifier.listModels.length,
-                    ),
+      body: SingleChildScrollView(
+        child: Consumer<CartVM>(
+          builder: (context, notifier, child) {
+            notifier.getTotalCost();
+            if (notifier.listModels.isNotEmpty) {
+              return Container(
+                height: SizeConfig.screenHeightDp,
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                  image: AssetImage(
+                    "assets/images/Doodle.png",
                   ),
-                  RichText(
-                      text: TextSpan(
-                          text: "Total Price:",
-                          style: TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold),
-                          children: [
-                        TextSpan(
-                            text: context
-                                .watch<CartVM>()
-                                .listModels[0]
-                                .price
-                                .toString(),
-                            style: TextStyle(
-                              color: XColors.primaryColor,
-                              fontWeight: FontWeight.bold,
-                            ))
-                      ]))
-                ],
-              ),
-            );
-/*            return Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                  color: Colors.green,
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/Doodle.png"),
-                    fit: BoxFit.fill,
-                  )),
-              child: Column(
-                children: [
-                  RichText(
-                      text: TextSpan(
-                          text: "You have ",
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                          children: [
-                        TextSpan(
-                          text: notifier.listModels.length.toString(),
-                          style: TextStyle(
-                              color: XColors.primaryColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ])),
-                  YMargin(20),
-                  ListView.builder(
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: NormalText(
-                          text: notifier.listModels[index].name,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          textColor: Colors.black,
-                        ),
-                        subtitle: NormalText(
-                          text: notifier.listModels[index].price.toString(),
-                          textColor: Colors.black.withOpacity(0.7),
-                        ),
-                        leading: Image.asset(
-                          "assets/images/trolley.png",
-                          color: Colors.black.withOpacity(0.7),
-                        ),
-                        trailing: Row(
-                          children: [
-                            TextButton(
-                              child: Text("+"),
-                            ),
-                            XMargin(20),
-                            NormalText(
-                              text: notifier.listModels[0].amount.toString(),
-                              textColor: XColors.primaryColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            XMargin(20),
-                            TextButton(
-                              child: Text("-"),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    itemCount: notifier.listModels.length,
-                  ),
-                  YMargin(40),
-                  RichText(
-                      text: TextSpan(
-                          text: "Total Price:",
-                          style: TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold),
-                          children: [
-                        TextSpan(
-                            text: context
-                                .watch<CartVM>()
-                                .listModels[0]
-                                .price
-                                .toString(),
-                            style: TextStyle(
-                              color: XColors.primaryColor,
-                              fontWeight: FontWeight.bold,
-                            ))
-                      ]))
-                ],
-              ),
-            );
-   */
-          } else if (notifier.listModels.isEmpty) {
-            return Container(
-              child: Center(
+                )),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset("assets/images/errorocuured.png"),
-                    NormalText(
-                      text: "There is nothing to see here",
-                      textColor: Colors.black,
-                      fontWeight: FontWeight.bold,
+                    RichText(
+                        textAlign: TextAlign.right,
+                        text: TextSpan(
+                            text: "You have ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: notifier.listModels.length.toString(),
+                                style: TextStyle(
+                                    color: XColors.primaryColor,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(text: " Items in your cart")
+                            ])),
+                    Container(
+                      height: SizeConfig.screenHeightDp - 200,
+                      child: ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: SizedBox(
+                              width: config.sw(30),
+                              child: Text(
+                                notifier.listModels[index].name,
+                                maxLines: 10,
+                                softWrap: true,
+                                //textScaleFactor: 0.65,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ),
+                            subtitle: Text(
+                              "£ ${notifier.listModels[index].price.toString()}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.black.withOpacity(0.5)),
+                            ),
+                            leading: Icon(
+                              Icons.shopping_cart,
+                            ),
+                            trailing: Container(
+                              width: config.sw(80),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    "+",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  ),
+                                  Text("${notifier.listModels[index].amount}",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: XColors.primaryColor)),
+                                  Text("-",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black))
+                                ],
+                              ),
+                            ),
+/*                          trailing: Text(
+                                "${notifier.listModels[index].amount.toString()} pieces"),*/
+                          );
+                        },
+                        itemCount: notifier.listModels.length,
+                      ),
                     ),
-                    NormalText(
-                      text: "Add products if you wanna purchase",
-                      textColor: Colors.black.withOpacity(0.7),
-                      fontSize: 16,
-                    ),
-                    YMargin(50),
-                    NormalText(
-                      text: "Go to products",
-                      fontSize: 20,
-                      textColor: XColors.primaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    RichText(
+                        text: TextSpan(
+                            text: "Total Price:",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                            children: [
+                          TextSpan(
+                              text:
+                                  context.watch<CartVM>().totalCost.toString(),
+                              style: TextStyle(
+                                color: XColors.primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ))
+                        ])),
                   ],
                 ),
-              ),
-            );
-          } else {
-            return Container(
-              child: Text(
-                notifier.listModels[0].name,
-                style: TextStyle(color: Colors.red),
-              ),
-            );
-          }
-        },
+              );
+            } else if (notifier.listModels.isEmpty) {
+              return Container(
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset("assets/images/errorocuured.png"),
+                      NormalText(
+                        text: "There is nothing to see here",
+                        textColor: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      NormalText(
+                        text: "Add products if you wanna purchase",
+                        textColor: Colors.black.withOpacity(0.7),
+                        fontSize: 16,
+                      ),
+                      YMargin(50),
+                      NormalText(
+                        text: "Go to products",
+                        fontSize: 20,
+                        textColor: XColors.primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              return Container(
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: XColors.primaryColor,
+                  ),
+                ),
+              );
+            }
+          },
+        ),
       ),
     );
   }

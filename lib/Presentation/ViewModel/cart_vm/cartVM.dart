@@ -6,6 +6,7 @@ import 'package:zia/widgets/texts.dart';
 
 class CartVM extends ChangeNotifier {
   List<CartModel> listModels = [];
+  int totalCost = 0;
 
   addToList(BuildContext context) async {
     DatabaseProvider.instance.getCart().then((value) {
@@ -22,5 +23,24 @@ class CartVM extends ChangeNotifier {
         backgroundColor: Colors.white,
       ));
     });
+  }
+
+  void getTotalCost() {
+    totalCost = 0;
+    for (int i = 0; i < listModels.length; i++) {
+      totalCost = totalCost + (listModels[i].price * listModels[i].amount);
+    }
+  }
+
+  increaseAmount(int index){
+    listModels[index].amount++;
+    getTotalCost();
+    notifyListeners();
+  }
+
+  decreasesAmount(int index){
+    listModels[index].amount--;
+    getTotalCost();
+    notifyListeners();
   }
 }

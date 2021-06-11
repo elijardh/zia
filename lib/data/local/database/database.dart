@@ -31,10 +31,17 @@ class DatabaseProvider {
         "CREATE TABLE cart(id INTEGER PRIMARY KEY, name TEXT, price INT, amount INT )");
   }
 
-  addToCart(CartModel model) async {
+  Future addToCart(CartModel model) async {
     var dbClient = await db;
-    var res = dbClient.insert("cart", model.toJson());
-    return res;
+
+    if(getItem(model.id) == null){
+      throw Exception("Item already exist in cart");
+    }
+    else{
+      var res = dbClient.insert("cart", model.toJson());
+      return res;
+    }
+
   }
 
   updateCart(CartModel model) async {
@@ -62,5 +69,11 @@ class DatabaseProvider {
     List<CartModel> list =
         res.isNotEmpty ? res.map((c) => CartModel.fromJson(c)).toList() : [];
     return list;
+  }
+
+  getItem(int id) async{
+    final dbClient = await db;
+    var res = await dbClient.query("cart", where: "id = ?", whereArgs:[id]);
+    return res;
   }
 }

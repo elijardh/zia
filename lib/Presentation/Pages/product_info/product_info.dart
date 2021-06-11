@@ -25,11 +25,25 @@ class _ProductInfoState extends State<ProductInfo> {
         price: widget.model.price,
         name: widget.model.title);
 
-    DatabaseProvider.instance.addToCart(cartMod);
-    Future.delayed(Duration(seconds: 5), () {
-      DatabaseProvider.instance.getCart().then((value) {
-        print(value[0].name);
-      });
+    DatabaseProvider.instance.addToCart(cartMod).then((value) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: NormalText(
+          text: "Item succesfully added to cart",
+          textColor: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+        backgroundColor: XColors.primaryColor,
+      ),
+      );
+    }).catchError((e){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: NormalText(
+          text: e.toString(),
+          textColor: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+        backgroundColor: XColors.primaryColor,
+      ));
     });
   }
 
