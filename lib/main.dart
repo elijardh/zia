@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'Presentation/Pages/HomePage/HomePage.dart';
 import 'Presentation/Pages/Onboarding/onboarding.dart';
 import 'Presentation/Pages/Onboarding/splashscreen.dart';
+import 'Presentation/Pages/upload_page/uploadpage.dart';
 import 'Presentation/ViewModel/Catalog/CatalogVM.dart';
 import 'Presentation/ViewModel/HomePageViewModel/HomePageViewModel.dart';
 import 'Presentation/ViewModel/cart_vm/cartVM.dart';
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
         SizeConfig.init(context,
             width: size.width, height: size.height, allowFontScaling: true);
 
-        return SplashScreen();
+        return UploadPage();
       }),
     );
   }

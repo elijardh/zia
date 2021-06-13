@@ -32,10 +32,11 @@ class _UploadPageState extends State<UploadPage> {
         ),
         body: SingleChildScrollView(
           child: GestureDetector(
-              onTap: () {
-                setState(() async {
-                  _fileImage = await ImagePicker.platform
-                      .pickImage(source: ImageSource.gallery);
+              onTap: () async {
+                PickedFile test = await ImagePicker.platform
+                    .pickImage(source: ImageSource.gallery);
+                setState(() {
+                  _fileImage = test;
                 });
               },
               child: Container(
