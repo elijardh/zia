@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:zia/Domain/ProductModel.dart';
 import 'package:zia/Presentation/ViewModel/upload_vm/uploadvm.dart';
 import 'package:zia/utils/colors.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
+import 'package:zia/widgets/button.dart';
 import 'package:zia/widgets/text_field.dart';
 import 'package:zia/widgets/texts.dart';
 import 'package:zia/widgets/y_margin.dart';
@@ -31,7 +33,17 @@ class _UploadPageState extends State<UploadPage> {
     return Scaffold(
         backgroundColor: Colors.white,
         bottomSheet: XButton(
-          onClick: () => navigate(context, CartPage()),
+          onClick: () {
+            ProductModel model = ProductModel(
+              image: "",
+              price: productCost.value.text,
+              id: productAmount.value as int,
+              category: category,
+              description: productDescription.text,
+              title: productName.text,
+            );
+            context.read<UploadVM>().uploadWholeData(context, model);
+          },
           text: "Upload Product",
           textColor: Colors.white,
           height: config.sh(50),
@@ -65,20 +77,29 @@ class _UploadPageState extends State<UploadPage> {
         ),
         body: SingleChildScrollView(
             child: Container(
-          height: SizeConfig.screenHeightDp,
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          //height: SizeConfig.screenHeightDp,
           width: SizeConfig.screenWidthDp,
           child: Column(
             children: [
               YMargin(50),
               GestureDetector(
-                onTap: context.read<UploadVM>().uploadImage(),
+                onTap: () {
+                  context.read<UploadVM>().uploadImage();
+                },
                 child: Container(
                   height: config.sh(100),
                   width: config.sw(100),
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: XColors.primaryColor),
+                    shape: BoxShape.circle,
+                    color: XColors.primaryColor,
+                  ),
                   child: context.watch<UploadVM>().image != null
-                      ? Image.file(File(context.watch<UploadVM>().image.path))
+                      ? Image.file(
+                          File(context.watch<UploadVM>().image.path),
+                          fit: BoxFit.cover,
+                          scale: 0.5,
+                        )
                       : Icon(
                           Icons.camera,
                           color: Colors.white,
@@ -107,7 +128,7 @@ class _UploadPageState extends State<UploadPage> {
                       enabledBorderColor: XColors.primaryColor,
                       focusedBorderColor: XColors.primaryColor,
                     ),
-                    YMargin(50),
+                    YMargin(20),
                     NormalText(
                       text: "Price",
                       textColor: Colors.black,
@@ -120,7 +141,7 @@ class _UploadPageState extends State<UploadPage> {
                       enabledBorderColor: XColors.primaryColor,
                       focusedBorderColor: XColors.primaryColor,
                     ),
-                    YMargin(50),
+                    YMargin(20),
                     NormalText(
                       text: "Amount in Stock",
                       textColor: Colors.black,
@@ -133,40 +154,61 @@ class _UploadPageState extends State<UploadPage> {
                       enabledBorderColor: XColors.primaryColor,
                       focusedBorderColor: XColors.primaryColor,
                     ),
+                    YMargin(20),
                     NormalText(
                       text: "Category",
                       textColor: Colors.black,
                     ),
-                    DropdownButton<String>(
-                      elevation: 0,
-                      value: "Select Category",
-                      icon: const Icon(Icons.arrow_downward),
-                      style: TextStyle(
-                        color: Colors.black,
+                    YMargin(10),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      decoration: BoxDecoration(
+                        color: XColors.primaryColor.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      onChanged: (value) {
-                        setState(() {
-                          category = value;
-                        });
-                      },
-                      items: <String>[
-                        'Electronics',
-                        'Jewelery',
-                        "Men's Clothing",
-                        "Women's Clothing"
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                      height: config.sh(50),
+                      width: config.sw(400),
+                      child: DropdownButton<String>(
+                        elevation: 0,
+                        hint: Text("Select Category"),
+                        value: category,
+                        underline: Divider(
+                          height: 2,
+                          color: Colors.red,
+                        ),
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            category = value;
+                          });
+                        },
+                        items: <String>[
+                          "Electronics",
+                          "Jewelery",
+                          "Men's Clothing",
+                          "Women's Clothing"
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
                     ),
                     YMargin(50),
                     Container(
+                      height: config.sh(200),
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      color: XColors.primaryColor.withOpacity(0.3),
                       child: TextField(
+                        //expands: true,
+                        maxLines: 1000,
                         decoration: InputDecoration(
+                          border: InputBorder.none,
                           fillColor: XColors.primaryColor.withOpacity(0.2),
-                          labelText: "Describe the product",
+                          hintText: "Describe the product",
                         ),
                         controller: productDescription,
                       ),

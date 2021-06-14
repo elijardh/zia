@@ -12,6 +12,7 @@ import 'Presentation/ViewModel/Catalog/CatalogVM.dart';
 import 'Presentation/ViewModel/HomePageViewModel/HomePageViewModel.dart';
 import 'Presentation/ViewModel/cart_vm/cartVM.dart';
 import 'Presentation/ViewModel/login_vm/loginvm.dart';
+import 'Presentation/ViewModel/upload_vm/uploadvm.dart';
 import 'data/network/API/APICalling/GetProduct.dart';
 
 void main() async {
@@ -27,7 +28,8 @@ void main() async {
           create: (_) => CatalogVM(),
         ),
         ChangeNotifierProvider<CartVM>(create: (_) => CartVM()),
-        ChangeNotifierProvider<LoginVM>(create: (_) => LoginVM())
+        ChangeNotifierProvider<LoginVM>(create: (_) => LoginVM()),
+        ChangeNotifierProvider<UploadVM>(create: (_) => UploadVM()),
       ],
       child: MyApp(
         email: mail,
