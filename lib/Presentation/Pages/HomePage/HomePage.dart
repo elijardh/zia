@@ -9,6 +9,7 @@ import 'package:zia/Presentation/Pages/menu/menu.dart';
 import 'package:zia/Presentation/Pages/product_info/product_info.dart';
 import 'package:zia/Presentation/Pages/upload_page/uploadpage.dart';
 import 'package:zia/Presentation/ViewModel/HomePageViewModel/HomePageViewModel.dart';
+import 'package:zia/Presentation/ViewModel/homepage_stream/homestream.dart';
 import 'package:zia/Presentation/Views/Catalog.dart';
 import 'package:zia/Presentation/Views/homepageview.dart';
 import 'package:zia/data/network/API/APICalling/GetProduct.dart';
@@ -22,7 +23,9 @@ import 'package:zia/widgets/y_margin.dart';
 
 class HomePage extends StatefulWidget {
   final String name;
+
   HomePage({this.name});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -36,6 +39,7 @@ class _HomePageState extends State<HomePage> {
     "Men's Clothing",
     "Women's Clothing",
   ];
+
   @override
   void initState() {
     super.initState();
@@ -50,11 +54,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   SizeConfig config = new SizeConfig();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomSheet: XButton(
-        onClick: () => navigate(context, UploadPage()),
+        onClick: () {
+          getProduct();
+        },
+/*        onClick: () => navigate(context, UploadPage()),*/
         text: "Go to Cart",
         textColor: Colors.white,
         height: config.sh(50),

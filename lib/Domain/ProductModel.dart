@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+
 class ProductModel {
   String category;
   String description;
@@ -29,7 +29,13 @@ class ProductModel {
     );
   }
 
-  ProductModel.fromSnapshot(DataSnapshot snapshot) :
+  ProductModel.fromSnapshot(DataSnapshot snapshot)
+      : id = snapshot.key as int,
+        category = snapshot.value["category"],
+        price = snapshot.value["price"] as Object,
+        description = snapshot.value["description"],
+        title = snapshot.value["title"],
+        image = snapshot.value["image"];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zia/Domain/ProductListModel.dart';
+import 'package:zia/Domain/ProductModel.dart';
 import 'package:zia/data/network/API/APICalling/GetProduct.dart';
 
 class HomePageViewModel extends ChangeNotifier {
@@ -15,3 +16,4 @@ class HomePageViewModel extends ChangeNotifier {
     }
   }
 }
+
