@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
+
 import 'ProductModel.dart';
 
 class ProductList {
@@ -12,4 +15,12 @@ class ProductList {
       list: model,
     );
   }
+
+/*  factory ProductList.fromSnapshot(QueryDocumentSnapshot snap) {
+    List<ProductModel> model = [];
+    model = snap.reference.((e) => ProductModel.fromSnapshot(e)).toList();
+    return ProductList(
+      list: model,
+    );
+  }*/
 }

@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class ProductModel {
   String category;
   String description;
-  int id;
+  Object id;
   String image;
   Object price;
   String title;
@@ -29,13 +30,13 @@ class ProductModel {
     );
   }
 
-  ProductModel.fromSnapshot(DataSnapshot snapshot)
-      : id = snapshot.key as int,
-        category = snapshot.value["category"],
-        price = snapshot.value["price"] as Object,
-        description = snapshot.value["description"],
-        title = snapshot.value["title"],
-        image = snapshot.value["image"];
+  ProductModel.fromSnapshot(QueryDocumentSnapshot snapshot)
+      : id = snapshot.id,
+        category = snapshot["category"],
+        price = snapshot["price"] as int,
+        description = snapshot["description"],
+        title = snapshot["name"],
+        image = snapshot["image"];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

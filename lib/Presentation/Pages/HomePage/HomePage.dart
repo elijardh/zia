@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zia/Domain/ProductListModel.dart';
+import 'package:zia/Domain/ProductModel.dart';
+import 'package:zia/Domain/firebaseModel.dart';
 import 'package:zia/Domain/user_Model.dart';
 import 'package:zia/Presentation/Pages/cart_page/cartpage.dart';
 import 'package:zia/Presentation/Pages/menu/menu.dart';
@@ -187,6 +189,34 @@ class _HomePageState extends State<HomePage> {
                   }
                 },
               ),
+            ),
+            StreamBuilder(
+              stream:
+                  FirebaseFirestore.instance.collection("products").snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasData) {
+                  List<ProductModel> list = snapshot.data.docs
+                      .map((e) => ProductModel.fromSnapshot(e))
+                      .toList();
+                  return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: list.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                            onTap: () {
+                              navigate(
+                                  context,
+                                  ProductInfo(
+                                    model: list[index],
+                                  ));
+                            },
+                            child: HomePageWidget(
+                              model: list[index],
+                            ));
+                      });
+                }
+                return Container();
+              },
             ),
             YMargin(10),
             Row(
