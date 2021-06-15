@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -10,6 +9,7 @@ import 'package:zia/utils/colors.dart';
 class UploadVM extends ChangeNotifier {
   Reference storageReference = FirebaseStorage.instance.ref();
   PickedFile image;
+  bool uploading;
 
   uploadImage() async {
     PickedFile temp =
@@ -18,35 +18,69 @@ class UploadVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  uploadWholeData(BuildContext context, ProductModel model) async {
-    Reference ref = storageReference.child("productimage");
+  Future<String> uploadImageFire() async {
+    Reference ref = storageReference.child("/productimage");
     UploadTask task =
         ref.child("${image.toString()}").putFile(File(image.path));
-    TaskSnapshot shot = await task.catchError((e) {
+    TaskSnapshot taskSnapshot = await task;
+    String url = await taskSnapshot.ref.getDownloadURL();
+    print(url);
+    return url;
+  }
+
+  fullUpload(
+      {BuildContext context,
+      String price,
+      String amount,
+      String category,
+      String description,
+      String title}) {
+    uploading = true;
+    uploadImageFire().then((value) {
+      uploadData(
+          image: value,
+          title: title,
+          description: description,
+          category: category,
+          amount: amount,
+          price: price,
+          context: context);
+    }).catchError((e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
+    });
+  }
+
+  Future uploadData(
+      {BuildContext context,
+      String price,
+      String amount,
+      String category,
+      String description,
+      String image,
+      String title}) async {
+    FirebaseFirestore.instance.collection("products").doc().set({
+      "image": image,
+      "price": price,
+      "amount": amount,
+      "category": category,
+      "description": description,
+      "name": title
+    }).then((value) {
+      uploading = false;
+
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
-          e.toString(),
-          style: TextStyle(color: Colors.white),
+          "Upload Succesful",
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
         backgroundColor: XColors.primaryColor,
       ));
-    });
-    shot.ref.getDownloadURL().then((value) {
-      model.image = value;
-      FirebaseFirestore.instance.collection("products").doc().set({
-        "image": model.image,
-        "price": model.price,
-        "amount": model.id,
-        "category": model.category,
-        "description": model.description,
-        "name": model.title
-      }).then((value) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Upload Succesful")));
-      }).catchError((e) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(e.toString())));
-      });
+    }).catchError((e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
     });
   }
 }

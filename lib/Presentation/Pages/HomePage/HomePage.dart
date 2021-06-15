@@ -7,6 +7,7 @@ import 'package:zia/Domain/user_Model.dart';
 import 'package:zia/Presentation/Pages/cart_page/cartpage.dart';
 import 'package:zia/Presentation/Pages/menu/menu.dart';
 import 'package:zia/Presentation/Pages/product_info/product_info.dart';
+import 'package:zia/Presentation/Pages/upload_page/uploadpage.dart';
 import 'package:zia/Presentation/ViewModel/HomePageViewModel/HomePageViewModel.dart';
 import 'package:zia/Presentation/Views/Catalog.dart';
 import 'package:zia/Presentation/Views/homepageview.dart';
@@ -53,7 +54,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomSheet: XButton(
-        onClick: () => navigate(context, CartPage()),
+        onClick: () => navigate(context, UploadPage()),
         text: "Go to Cart",
         textColor: Colors.white,
         height: config.sh(50),

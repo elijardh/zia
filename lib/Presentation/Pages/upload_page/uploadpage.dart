@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:zia/Domain/ProductModel.dart';
 import 'package:zia/Presentation/ViewModel/upload_vm/uploadvm.dart';
@@ -33,18 +32,20 @@ class _UploadPageState extends State<UploadPage> {
     return Scaffold(
         backgroundColor: Colors.white,
         bottomSheet: XButton(
+          progressColor: Colors.white,
           onClick: () {
-            ProductModel model = ProductModel(
-              image: "",
-              price: productCost.value.text,
-              id: productAmount.value as int,
-              category: category,
-              description: productDescription.text,
-              title: productName.text,
-            );
-            context.read<UploadVM>().uploadWholeData(context, model);
+            print("hello");
+            print(productName.value.text);
+            context.read<UploadVM>().fullUpload(
+                context: context,
+                price: productCost.value.text,
+                amount: productAmount.value.text,
+                category: category,
+                description: productDescription.value.text,
+                title: productName.value.text);
           },
           text: "Upload Product",
+          isLoading: context.watch<UploadVM>().uploading,
           textColor: Colors.white,
           height: config.sh(50),
           width: SizeConfig.screenWidthDp,
@@ -82,28 +83,26 @@ class _UploadPageState extends State<UploadPage> {
           width: SizeConfig.screenWidthDp,
           child: Column(
             children: [
-              YMargin(50),
+              YMargin(15),
               GestureDetector(
                 onTap: () {
                   context.read<UploadVM>().uploadImage();
                 },
                 child: Container(
-                  height: config.sh(100),
-                  width: config.sw(100),
+                  height: config.sh(150),
+                  width: config.sw(150),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: XColors.primaryColor,
+                    image: DecorationImage(
+                        image: context.watch<UploadVM>().image != null
+                            ? FileImage(
+                                File(context.watch<UploadVM>().image.path),
+                                scale: 0.5,
+                              )
+                            : AssetImage("assets/images/camera.png"),
+                        fit: BoxFit.cover),
                   ),
-                  child: context.watch<UploadVM>().image != null
-                      ? Image.file(
-                          File(context.watch<UploadVM>().image.path),
-                          fit: BoxFit.cover,
-                          scale: 0.5,
-                        )
-                      : Icon(
-                          Icons.camera,
-                          color: Colors.white,
-                        ),
                 ),
               ),
               YMargin(20),
