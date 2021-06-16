@@ -19,12 +19,18 @@ class ProductInfo extends StatefulWidget {
 
 class _ProductInfoState extends State<ProductInfo> {
   addToCart() {
+    print("hello");
+    //int p = (widget.model.price).cast<int>();
+    //print(p.toString());
+
     CartModel cartMod = CartModel(
-        id: widget.model.id,
-        amount: widget.model.price,
+        objID: widget.model.id.toString(),
+        amount: 1,
         price: widget.model.price,
         name: widget.model.title);
 
+    print(cartMod.name);
+    //DatabaseProvider.instance.delete();
     DatabaseProvider.instance.addToCart(cartMod).then((value) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -103,7 +109,7 @@ class _ProductInfoState extends State<ProductInfo> {
                       centerTitle: false,
                       background: Image.network(
                         widget.model.image,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
                     );
                   },

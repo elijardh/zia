@@ -33,7 +33,9 @@ class ProductModel {
   ProductModel.fromSnapshot(QueryDocumentSnapshot snapshot)
       : id = snapshot.id,
         category = snapshot["category"],
-        price = snapshot["price"] as int,
+        price = snapshot["price"] is double
+            ? (snapshot['price'] as double).toInt()
+            : snapshot['price'] as int,
         description = snapshot["description"],
         title = snapshot["name"],
         image = snapshot["image"];

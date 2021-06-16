@@ -30,7 +30,7 @@ class UploadVM extends ChangeNotifier {
 
   fullUpload(
       {BuildContext context,
-      String price,
+      int price,
       String amount,
       String category,
       String description,
@@ -53,7 +53,7 @@ class UploadVM extends ChangeNotifier {
 
   Future uploadData(
       {BuildContext context,
-      String price,
+      int price,
       String amount,
       String category,
       String description,

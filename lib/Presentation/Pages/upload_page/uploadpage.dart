@@ -38,7 +38,7 @@ class _UploadPageState extends State<UploadPage> {
             print(productName.value.text);
             context.read<UploadVM>().fullUpload(
                 context: context,
-                price: productCost.value.text,
+                price: int.parse(productCost.value.text),
                 amount: productAmount.value.text,
                 category: category,
                 description: productDescription.value.text,

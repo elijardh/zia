@@ -61,10 +61,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomSheet: XButton(
-        onClick: () {
-          getProduct();
-        },
-/*        onClick: () => navigate(context, UploadPage()),*/
+        onClick: () => navigate(context, CartPage()),
         text: "Go to Cart",
         textColor: Colors.white,
         height: config.sh(50),
@@ -76,8 +73,6 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
           child: Container(
         padding: EdgeInsets.symmetric(horizontal: 15),
-        height: SizeConfig.screenHeightDp,
-        width: SizeConfig.screenWidthDp,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -198,22 +193,25 @@ class _HomePageState extends State<HomePage> {
                   List<ProductModel> list = snapshot.data.docs
                       .map((e) => ProductModel.fromSnapshot(e))
                       .toList();
-                  return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: list.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                            onTap: () {
-                              navigate(
-                                  context,
-                                  ProductInfo(
-                                    model: list[index],
-                                  ));
-                            },
-                            child: HomePageWidget(
-                              model: list[index],
-                            ));
-                      });
+                  return Container(
+                    height: config.sh(250),
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: list.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                              onTap: () {
+                                navigate(
+                                    context,
+                                    ProductInfo(
+                                      model: list[index],
+                                    ));
+                              },
+                              child: HomePageWidget(
+                                model: list[index],
+                              ));
+                        }),
+                  );
                 }
                 return Container();
               },

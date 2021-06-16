@@ -9,7 +9,6 @@ class DatabaseProvider {
   static String name;
   static int price;
   static int amount;
-
   Database database;
 
   Future<Database> get db async {
@@ -18,6 +17,13 @@ class DatabaseProvider {
     }
     database = await initDB();
     return database;
+  }
+
+  delete() async {
+    String path = await getDatabasesPath();
+    String dataPath = path + "cart";
+    await deleteDatabase(dataPath);
+    print("deleted");
   }
 
   initDB() async {
@@ -29,18 +35,19 @@ class DatabaseProvider {
 
   _onCreate(Database db, int version) async {
     await db.execute(
-        "CREATE TABLE cart(id INTEGER PRIMARY KEY, name TEXT, price INT, amount INT )");
+        "CREATE TABLE cart(id INTEGER PRIMARY KEY AUTOINCREMENT,objID TEXT, name TEXT, price INT, amount INT )");
   }
 
   Future addToCart(CartModel model) async {
     var dbClient = await db;
-
-    if (getItem(model.id) == null) {
+    var res = dbClient.insert("cart", model.toJson());
+    return res;
+/*    if (getItem(model.objID) == null) {
       throw Exception("Item already exist in cart");
     } else {
       var res = dbClient.insert("cart", model.toJson());
       return res;
-    }
+    }*/
   }
 
   updateCart(CartModel model) async {
@@ -70,9 +77,9 @@ class DatabaseProvider {
     return list;
   }
 
-  getItem(int id) async {
+  getItem(String id) async {
     final dbClient = await db;
-    var res = await dbClient.query("cart", where: "id = ?", whereArgs: [id]);
+    var res = await dbClient.query("cart", where: "objID = ?", whereArgs: [id]);
     return res;
   }
 }
