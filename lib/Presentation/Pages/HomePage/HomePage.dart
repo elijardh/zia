@@ -13,6 +13,7 @@ import 'package:zia/Presentation/Pages/upload_page/uploadpage.dart';
 import 'package:zia/Presentation/ViewModel/HomePageViewModel/HomePageViewModel.dart';
 import 'package:zia/Presentation/ViewModel/homepage_stream/homestream.dart';
 import 'package:zia/Presentation/Views/Catalog.dart';
+import 'package:zia/Presentation/Views/drawer.dart';
 import 'package:zia/Presentation/Views/homepageview.dart';
 import 'package:zia/data/network/API/APICalling/GetProduct.dart';
 import 'package:zia/data/network/FireBase/User/fire_user.dart';
@@ -60,7 +61,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomSheet: XButton(
+      drawer: Drawer(child: DrawerWidget()),
+/*      bottomSheet: XButton(
         onClick: () => navigate(context, CartPage()),
         text: "Go to Cart",
         textColor: Colors.white,
@@ -68,7 +70,64 @@ class _HomePageState extends State<HomePage> {
         width: SizeConfig.screenWidthDp,
         buttonColor: XColors.primaryColor,
         radius: 0,
-      ),
+      ),*/
+      appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          actions: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: InkWell(
+                onTap: () {
+                  navigate(
+                      context,
+                      Menu(
+                        model: user,
+                      ));
+                },
+                child: Container(
+                    height: config.sh(50),
+                    width: config.sw(50),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: FadeInImage(
+                      placeholder: AssetImage("assets/images/userPH.png"),
+                      image: NetworkImage(
+                          "https://static.wikia.nocookie.net/kubera/images/3/3a/3-188_Yaksha.png/revision/latest/scale-to-width-down/310?cb=20210413055331",
+                          scale: 2),
+                    )),
+              ),
+            ),
+          ],
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset(
+                "assets/images/ziaIcon.png",
+                scale: 2.5,
+              ),
+              NormalText(
+                text: "When we said diverse catalogs, we meant it",
+                textColor: Colors.black,
+                fontSize: 12,
+              ),
+            ],
+          ),
+          centerTitle: false,
+          leading: Builder(
+            builder: (context) => IconButton(
+              icon: Icon(
+                Icons.menu,
+                color: XColors.primaryColor,
+                size: 30,
+              ),
+              onPressed: () {
+                print("hello");
+                Scaffold.of(context).openDrawer();
+              },
+            ),
+          )),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
           child: Container(
@@ -76,47 +135,6 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            YMargin(30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Image.asset(
-                      "assets/images/ziaIcon.png",
-                      scale: 2.5,
-                    ),
-                    NormalText(
-                      text: "When we said diverse catalogs, we meant it",
-                      textColor: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ],
-                ),
-                InkWell(
-                  onTap: () {
-                    navigate(
-                        context,
-                        Menu(
-                          model: user,
-                        ));
-                  },
-                  child: Container(
-                      height: config.sh(50),
-                      width: config.sw(50),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: FadeInImage(
-                        placeholder: AssetImage("assets/images/userPH.png"),
-                        image: NetworkImage(
-                            "https://static.wikia.nocookie.net/kubera/images/3/3a/3-188_Yaksha.png/revision/latest/scale-to-width-down/310?cb=20210413055331",
-                            scale: 2),
-                      )),
-                ),
-              ],
-            ),
             YMargin(25),
             Container(
               height: config.sh(35),
