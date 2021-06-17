@@ -26,6 +26,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
@@ -99,6 +100,10 @@ class _CartPageState extends State<CartPage> {
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           return ListTile(
+                            onTap: () {
+                              notifier.deleteFromList(
+                                  notifier.listModels[index].id, index);
+                            },
                             title: SizedBox(
                               width: config.sw(30),
                               child: Text(

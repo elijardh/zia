@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zia/Domain/ProductModel.dart';
 import 'package:zia/Domain/cartModel.dart';
+import 'package:zia/Presentation/Views/catalog_dialog.dart';
 import 'package:zia/utils/colors.dart';
 import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
@@ -32,6 +33,7 @@ class _ProductInfoState extends State<ProductInfo> {
     print(cartMod.name);
     //DatabaseProvider.instance.delete();
     DatabaseProvider.instance.addToCart(cartMod).then((value) {
+      showDialog(context: context, builder: (_) => CatalogDialog());
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: NormalText(
@@ -58,6 +60,7 @@ class _ProductInfoState extends State<ProductInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         bottomSheet: XButton(
           onClick: () {
             addToCart();

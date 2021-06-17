@@ -19,9 +19,9 @@ class UploadVM extends ChangeNotifier {
   }
 
   Future<String> uploadImageFire() async {
+    String name = image.path.split("/").last;
     Reference ref = storageReference.child("/productimage");
-    UploadTask task =
-        ref.child("${image.toString()}").putFile(File(image.path));
+    UploadTask task = ref.child(name).putFile(File(image.path));
     TaskSnapshot taskSnapshot = await task;
     String url = await taskSnapshot.ref.getDownloadURL();
     print(url);
@@ -36,6 +36,7 @@ class UploadVM extends ChangeNotifier {
       String description,
       String title}) {
     uploading = true;
+    notifyListeners();
     uploadImageFire().then((value) {
       uploadData(
           image: value,
@@ -68,7 +69,7 @@ class UploadVM extends ChangeNotifier {
       "name": title
     }).then((value) {
       uploading = false;
-
+      notifyListeners();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
           "Upload Succesful",

@@ -100,9 +100,19 @@ class _UploadPageState extends State<UploadPage> {
                                 File(context.watch<UploadVM>().image.path),
                                 scale: 0.5,
                               )
-                            : AssetImage("assets/images/camera.png"),
-                        fit: BoxFit.cover),
+                            : AssetImage("assets/images/dia.png"),
+                        fit: context.watch<UploadVM>().image != null
+                            ? BoxFit.cover
+                            : BoxFit.fill,
+                        scale: 5),
                   ),
+                  child: context.watch<UploadVM>().image == null
+                      ? Icon(
+                          Icons.camera,
+                          size: 50,
+                          color: Colors.white,
+                        )
+                      : null,
                 ),
               ),
               YMargin(20),

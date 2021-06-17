@@ -25,6 +25,15 @@ class CartVM extends ChangeNotifier {
     });
   }
 
+  deleteFromList(int id, int index) {
+    DatabaseProvider.instance.deleteCart(id).then((value) {
+      listModels.removeAt(index);
+      notifyListeners();
+    }).catchError((e) {
+      print(e.toString());
+    });
+  }
+
   void getTotalCost() {
     totalCost = 0;
     for (int i = 0; i < listModels.length; i++) {

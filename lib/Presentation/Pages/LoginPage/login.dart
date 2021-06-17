@@ -29,18 +29,20 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                YMargin(100),
+                YMargin(80),
                 TitleText(
                   text: "Welcome Back",
-                  textColor: XColors.primaryColor,
+                  textColor: Colors.black,
+                  fontSize: 40,
                 ),
+                YMargin(10),
                 NormalText(
                   text:
                       "We’d say it’s good to have you back but why did you leave in the first place?",
                   maxLines: 3,
-                  textColor: XColors.primaryColor,
+                  textColor: Colors.black.withOpacity(0.5),
                 ),
-                YMargin(40),
+                YMargin(60),
                 NormalText(
                   text: "Email Address",
                   textColor: Colors.black,
@@ -71,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                     PasswordValidiator();
                   },
                 ),
-                YMargin(150),
+                YMargin(120),
                 XButton(
                   onClick: () {
                     UserModel userModel = new UserModel(

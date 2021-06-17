@@ -59,7 +59,7 @@ class DatabaseProvider {
     return res;
   }
 
-  deleteCart(int id) async {
+  Future deleteCart(int id) async {
     final dbClient = await db;
     dbClient.delete("cart", where: "id = ?", whereArgs: [id]);
   }
