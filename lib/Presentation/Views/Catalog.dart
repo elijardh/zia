@@ -29,6 +29,7 @@ class _CatalogsState extends State<Catalogs> {
     return InkWell(
       onTap: () {
         context.read<CatalogVM>().update(widget.index);
+        context.read<CatalogVM>().updateString(widget.catalogTitle);
         context
             .read<HomePageViewModel>()
             .getList(widget.catalogTitle.toLowerCase());

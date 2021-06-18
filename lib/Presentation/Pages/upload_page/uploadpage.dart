@@ -28,6 +28,13 @@ class _UploadPageState extends State<UploadPage> {
   SizeConfig config = SizeConfig();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<UploadVM>().image = null;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,

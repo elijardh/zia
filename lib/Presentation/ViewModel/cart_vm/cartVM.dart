@@ -10,8 +10,10 @@ class CartVM extends ChangeNotifier {
 
   addToList(BuildContext context) async {
     DatabaseProvider.instance.getCart().then((value) {
-      listModels = value;
-      print(listModels[0].name);
+      if (value.isNotEmpty) {
+        listModels = value;
+        print(listModels[0].name);
+      }
       notifyListeners();
     }).onError((error, stackTrace) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

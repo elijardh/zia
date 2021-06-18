@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zia/Presentation/Pages/HomePage/HomePage.dart';
 import 'package:zia/Presentation/ViewModel/cart_vm/cartVM.dart';
 import 'package:zia/utils/colors.dart';
+import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:zia/widgets/button.dart';
 import 'package:zia/widgets/texts.dart';
@@ -51,15 +53,17 @@ class _CartPageState extends State<CartPage> {
         ],
         elevation: 0,
       ),
-      bottomSheet: XButton(
-        onClick: null,
-        text: "CHECK OUT",
-        textColor: Colors.white,
-        height: config.sh(50),
-        width: SizeConfig.screenWidthDp,
-        buttonColor: XColors.primaryColor,
-        radius: 0,
-      ),
+      bottomSheet: context.watch<CartVM>().listModels.isNotEmpty
+          ? XButton(
+              onClick: null,
+              text: "CHECK OUT",
+              textColor: Colors.white,
+              height: config.sh(50),
+              width: SizeConfig.screenWidthDp,
+              buttonColor: XColors.primaryColor,
+              radius: 0,
+            )
+          : null,
       body: SingleChildScrollView(
         child: Consumer<CartVM>(
           builder: (context, notifier, child) {
@@ -189,31 +193,17 @@ class _CartPageState extends State<CartPage> {
                 ),
               );
             } else if (notifier.listModels.isEmpty) {
-              return Container(
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset("assets/images/errorocuured.png"),
-                      NormalText(
-                        text: "There is nothing to see here",
-                        textColor: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      NormalText(
-                        text: "Add products if you wanna purchase",
-                        textColor: Colors.black.withOpacity(0.7),
-                        fontSize: 16,
-                      ),
-                      YMargin(50),
-                      NormalText(
-                        text: "Go to products",
-                        fontSize: 20,
-                        textColor: XColors.primaryColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ],
+              return GestureDetector(
+                onTap: () {
+                  navigateReplace(context, HomePage());
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 70),
+                  child: Center(
+                    child: Image.asset(
+                      "assets/images/errorocuured.png",
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
               );

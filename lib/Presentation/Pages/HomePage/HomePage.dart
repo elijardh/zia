@@ -10,6 +10,7 @@ import 'package:zia/Presentation/Pages/cart_page/cartpage.dart';
 import 'package:zia/Presentation/Pages/menu/menu.dart';
 import 'package:zia/Presentation/Pages/product_info/product_info.dart';
 import 'package:zia/Presentation/Pages/upload_page/uploadpage.dart';
+import 'package:zia/Presentation/ViewModel/Catalog/CatalogVM.dart';
 import 'package:zia/Presentation/ViewModel/HomePageViewModel/HomePageViewModel.dart';
 import 'package:zia/Presentation/ViewModel/homepage_stream/homestream.dart';
 import 'package:zia/Presentation/Views/Catalog.dart';
@@ -17,6 +18,7 @@ import 'package:zia/Presentation/Views/drawer.dart';
 import 'package:zia/Presentation/Views/homepageview.dart';
 import 'package:zia/data/network/API/APICalling/GetProduct.dart';
 import 'package:zia/data/network/FireBase/User/fire_user.dart';
+import 'package:zia/data/network/FireBase/streaam/stream_data.dart';
 import 'package:zia/utils/colors.dart';
 import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
@@ -204,10 +206,17 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             StreamBuilder(
-              stream:
-                  FirebaseFirestore.instance.collection("products").snapshots(),
+              stream: FirebaseFirestore.instance
+                  .collection("products")
+                  .where(
+                    "category",
+                    isEqualTo: context.watch<CatalogVM>().cat,
+                  )
+                  .snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasData) {
+                  print(context.watch<CatalogVM>().cat);
+                  //print(snapshot.data.docs[0].data());
                   List<ProductModel> list = snapshot.data.docs
                       .map((e) => ProductModel.fromSnapshot(e))
                       .toList();
