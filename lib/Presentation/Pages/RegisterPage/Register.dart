@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:zia/Domain/user_Model.dart';
-import 'package:zia/Presentation/Pages/HomePage/HomePage.dart';
 import 'package:zia/data/network/FireBase/Register/RegFire.dart';
 import 'package:zia/utils/colors.dart';
-import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:zia/widgets/button.dart';
 import 'package:zia/widgets/text_field.dart';
-import 'package:zia/widgets/text_field_underline.dart';
 import 'package:zia/widgets/texts.dart';
 import 'package:zia/widgets/y_margin.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Register extends StatefulWidget {
   @override

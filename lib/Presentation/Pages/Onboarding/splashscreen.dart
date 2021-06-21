@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:zia/utils/navigator.dart';
-import 'package:zia/utils/size_config.dart';
 import 'package:zia/widgets/texts.dart';
 import 'package:zia/widgets/y_margin.dart';
 import 'onboarding.dart';

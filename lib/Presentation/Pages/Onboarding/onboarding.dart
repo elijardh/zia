@@ -1,12 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:zia/Presentation/Pages/HomePage/HomePage.dart';
-import 'package:zia/Presentation/Pages/RegisterPage/Register.dart';
 import 'package:zia/Presentation/Views/onboardingview.dart';
 import 'package:zia/utils/colors.dart';
-import 'package:zia/utils/indicator.dart';
 import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:zia/widgets/button.dart';

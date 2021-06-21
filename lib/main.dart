@@ -51,6 +51,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),*/
       home: Builder(builder: (BuildContext context) {
+        
         BuildEnvironment.init(flavor: BuildFlavor.development);
         Size size = MediaQuery.of(context).size;
         SizeConfig.init(context,

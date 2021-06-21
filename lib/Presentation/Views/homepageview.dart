@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:zia/Domain/ProductModel.dart';
 import 'package:zia/utils/colors.dart';
+import 'package:zia/utils/colors.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:zia/widgets/texts.dart';
 
 class HomePageWidget extends StatelessWidget {
-  final ProductModel model;
   HomePageWidget({this.model});
+
   final SizeConfig config = new SizeConfig();
+  final ProductModel model;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,7 +29,7 @@ class HomePageWidget extends StatelessWidget {
                   image: model.image != null
                       ? NetworkImage(model.image)
                       : AssetImage("assets/images/shopitem.png"),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
             ),
@@ -42,8 +45,10 @@ class HomePageWidget extends StatelessWidget {
                   textColor: Colors.black,
                 ),
                 NormalText(
-                  text: model.price != null ? model.price.toString() : "N/A",
-                  textColor: Colors.black.withOpacity(0.8),
+                  text: model.price != null
+                      ? '£ ${model.price.toString()}'
+                      : "N/A",
+                  textColor: XColors.primaryColor,
                   fontWeight: FontWeight.bold,
                 ),
               ],
