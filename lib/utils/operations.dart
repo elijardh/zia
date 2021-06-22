@@ -1,0 +1,3 @@
+enum OperationStatus {
+  INACTIVE, LOADING, SUCCESSFUL, FAILED
+}

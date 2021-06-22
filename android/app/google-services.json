@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "503058984016",
+    "firebase_url": "https://ziaa-bf87c.firebaseio.com",
+    "project_id": "ziaa-bf87c",
+    "storage_bucket": "ziaa-bf87c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:503058984016:android:409f06eed265c7a1a67555",
+        "android_client_info": {
+          "package_name": "com.example.zia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "503058984016-77luceh7hkjlkmnmftgpm0ko95292g0d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfObBd0wE1Qg4GlCmzsIDciBVi2N7dZCI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "503058984016-77luceh7hkjlkmnmftgpm0ko95292g0d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
