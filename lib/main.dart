@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zia/Presentation/Pages/LoginPage/login.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:zia/utils/envConfig.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
         SizeConfig.init(context,
             width: size.width, height: size.height, allowFontScaling: true);
 
-        return OrderPage();
+        return LoginPage();
       }),
     );
   }

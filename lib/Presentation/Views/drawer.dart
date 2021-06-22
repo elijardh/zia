@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zia/Presentation/Pages/cart_page/cartpage.dart';
+import 'package:zia/Presentation/Pages/order_page/orderpage.dart';
 import 'package:zia/Presentation/Pages/upload_page/uploadpage.dart';
 import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
@@ -37,6 +38,14 @@ class DrawerWidget extends StatelessWidget {
             },
             child: ListTile(
               title: Text("Check your Cart"),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              navigate(context, OrderPage());
+            },
+            child: ListTile(
+              title: Text("Your Orders"),
             ),
           ),
         ],
