@@ -55,7 +55,9 @@ class _CartPageState extends State<CartPage> {
       ),
       bottomSheet: context.watch<CartVM>().listModels.isNotEmpty
           ? XButton(
-              onClick: context.read<CartVM>().placeOrder(context),
+              onClick: () {
+                context.read<CartVM>().placeOrder(context);
+              },
               text: "CHECK OUT",
               textColor: Colors.white,
               height: config.sh(50),
@@ -107,7 +109,7 @@ class _CartPageState extends State<CartPage> {
                             background: Container(
                               color: XColors.primaryColor.withOpacity(0.3),
                               child: Center(
-                                child:Text("Delete"),
+                                child: Text("Delete"),
                               ),
                             ),
                             onDismissed: (DismissDirection dir) {
@@ -146,11 +148,13 @@ class _CartPageState extends State<CartPage> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     GestureDetector(
-                                      onTap: () {
-                                        notifier.increaseAmount(index);
-                                      },
-                                      child: Icon(Icons.add,color: Colors.black,)
-                                    ),
+                                        onTap: () {
+                                          notifier.increaseAmount(index);
+                                        },
+                                        child: Icon(
+                                          Icons.add,
+                                          color: Colors.black,
+                                        )),
                                     XMargin(10),
                                     Text("${notifier.listModels[index].amount}",
                                         style: TextStyle(
@@ -162,7 +166,10 @@ class _CartPageState extends State<CartPage> {
                                       onTap: () {
                                         notifier.decreasesAmount(index);
                                       },
-                                      child: Icon(Icons.remove,color: Colors.black,),
+                                      child: Icon(
+                                        Icons.remove,
+                                        color: Colors.black,
+                                      ),
                                     )
                                   ],
                                 ),
