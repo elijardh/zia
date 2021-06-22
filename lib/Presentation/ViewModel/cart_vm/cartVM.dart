@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -74,15 +76,21 @@ class CartVM extends ChangeNotifier {
       items.add(item);
     }
     OrderModel model = OrderModel(
-        buyerID: FirebaseFirestore.instance.doc("users/${user.uid}"),
+        buyerID: FirebaseFirestore.instance.collection("users").doc(user.uid),
         totalCost: totalCost,
         items: items,
         status: false);
-
+    print(model.items[0].itemRef);
     FirebaseFirestore.instance
         .collection("orders")
         .doc()
-        .set(model.toJson())
+        .set(
+        {
+          "buyerID": model.buyerID,
+          "totalCost": model.totalCost,
+          "items": model.toJson(model.items),
+          "status": model.status
+        })
         .then((value) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
@@ -92,9 +100,11 @@ class CartVM extends ChangeNotifier {
         backgroundColor: XColors.primaryColor,
       ));
     }).onError((error, stackTrace) {
+      print(stackTrace.toString());
+      print(error);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
-          error.toString(),
+          error.toString() + "${model.items[0].itemRef}",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: XColors.primaryColor,

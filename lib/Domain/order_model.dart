@@ -8,12 +8,12 @@ class OrderModel{
   List<OrderItem> items;
   OrderModel({this.buyerID,this.items,this.totalCost,this.status});
 
-  Map<String, dynamic> toJson(){
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data["totalCost"] = this.totalCost;
-    data["status"] = this.status;
-    data["buyerID"] = this.buyerID;
-    data["items"] = this.items;
-    return data;
+  toJson(List<OrderItem> test){
+    List<dynamic> json = [];
+    for(int i = 0;i<test.length;i++){
+      var temp = test[i].toJson();
+      json.add(temp);
+    }
+    return json;
   }
 }
