@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:zia/Domain/seller_order_model.dart';
 import 'package:zia/utils/colors.dart';
 
 class OrderPage extends StatefulWidget {
@@ -46,8 +47,11 @@ class _OrderPageState extends State<OrderPage> {
             ).snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot){
               if(snapshot.hasData){
+                List<SellerOrderModel> list = snapshot.data.docs.map((e) => SellerOrderModel.fromSnapShot(e)).toList();
                 return Container(
-
+                  child: Center(
+                    child: Text(list[0].items.items[0].itemName),
+                  ),
                 );
               }
               else if(!snapshot.hasData){
