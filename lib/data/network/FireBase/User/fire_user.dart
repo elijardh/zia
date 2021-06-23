@@ -7,6 +7,7 @@ Future<UserModel> getUser() async {
   var user = auth.currentUser;
   var tempHolder =
       await FirebaseFirestore.instance.collection("users").doc(user.uid).get();
+      
 
   if (tempHolder.get("email") != null) {
     print(tempHolder.get("email"));

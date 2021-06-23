@@ -29,6 +29,7 @@ class _OrderPageState extends State<OrderPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: Icon(
@@ -52,7 +53,7 @@ class _OrderPageState extends State<OrderPage> {
             if(snapshot.hasData){
               List<SellerOrderModel> list = snapshot.data.docs.map((e) => SellerOrderModel.fromSnapShot(e)).toList();
               return Container(
-                height: config.sh(100),
+                height: SizeConfig.screenHeightDp,
                 child: ListView.builder(
                   itemCount: list.length,
                   itemBuilder: (context, index) {
@@ -66,16 +67,19 @@ class _OrderPageState extends State<OrderPage> {
                           pass: "",
                           phoneNumber: snapshot.data["phoneNumber"],
                         );
-                        return ListTile(
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5.0),
+                          child: ListTile(
                       contentPadding: EdgeInsets.symmetric(horizontal: 10),
                       tileColor: XColors.primaryColor.withOpacity(0.2),
                       title: NormalText(text: "Order From ${model.fullName}",
-                      
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                     subtitle: NormalText(text: "Total cost of Orders of is £${list[index].totalCost}"),
-
-                    );
+                    trailing: Icon(Icons.circle_notifications_sharp,color: list[index].status == false? Colors.red : Colors.green,),
+                    ),
+                        );
                       }
                       else{
                         return Container();
