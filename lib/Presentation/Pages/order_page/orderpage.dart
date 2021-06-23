@@ -2,7 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zia/Domain/seller_order_model.dart';
+import 'package:zia/Domain/user_Model.dart';
 import 'package:zia/utils/colors.dart';
+import 'package:zia/utils/size_config.dart';
+import 'package:zia/widgets/texts.dart';
 
 class OrderPage extends StatefulWidget {
   const OrderPage({Key key}) : super(key: key);
@@ -19,7 +22,7 @@ class _OrderPageState extends State<OrderPage> {
     super.initState();
 
   }
-
+  SizeConfig config = SizeConfig();
   @override
   Widget build(BuildContext context) {
     var user = auth.currentUser;
@@ -37,29 +40,58 @@ class _OrderPageState extends State<OrderPage> {
           },
         ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          child: StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection("orders")
-                .where("buyerID",
-              isEqualTo: FirebaseFirestore.instance.doc("users/${user.uid}"),
-            ).snapshots(),
-            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot){
-              if(snapshot.hasData){
-                List<SellerOrderModel> list = snapshot.data.docs.map((e) => SellerOrderModel.fromSnapShot(e)).toList();
-                return Container(
-                  child: Center(
-                    child: Text(list[0].items.items[0].itemName),
-                  ),
-                );
-              }
-              else if(!snapshot.hasData){
-                return Container();
-              }
-              return Container();
-            },
-          ),
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        child: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection("orders")
+              .where("buyerID",
+            isEqualTo: FirebaseFirestore.instance.doc("users/${user.uid}"),
+          ).snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot){
+            if(snapshot.hasData){
+              List<SellerOrderModel> list = snapshot.data.docs.map((e) => SellerOrderModel.fromSnapShot(e)).toList();
+              return Container(
+                height: config.sh(100),
+                child: ListView.builder(
+                  itemCount: list.length,
+                  itemBuilder: (context, index) {
+                  return FutureBuilder(
+                    future:FirebaseFirestore.instance.doc(list[index].buyer.path).get(),
+                    builder: (context, snapshot){
+                      if(snapshot.hasData){
+                        UserModel model = UserModel(
+                          email: snapshot.data["email"],
+                          fullName: snapshot.data["fullname"],
+                          pass: "",
+                          phoneNumber: snapshot.data["phoneNumber"],
+                        );
+                        return ListTile(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                      tileColor: XColors.primaryColor.withOpacity(0.2),
+                      title: NormalText(text: "Order From ${model.fullName}",
+                      
+                      fontWeight: FontWeight.bold,
+                    ),
+                    subtitle: NormalText(text: "Total cost of Orders of is £${list[index].totalCost}"),
+
+                    );
+                      }
+                      else{
+                        return Container();
+                      }
+                    },
+                  );
+                }),
+              );
+            }
+            else if(!snapshot.hasData){
+              return Container(
+                child: Center(child: TitleText(text: "No Order",),),
+              );
+            }
+            return Container();
+          },
         ),
       ),
     );
