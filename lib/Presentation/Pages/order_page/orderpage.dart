@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zia/Domain/seller_order_model.dart';
 import 'package:zia/Domain/user_Model.dart';
+import 'package:zia/Presentation/Pages/specific_order_page/specificorderpage.dart';
 import 'package:zia/utils/colors.dart';
+import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:zia/widgets/texts.dart';
 
@@ -70,6 +72,12 @@ class _OrderPageState extends State<OrderPage> {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 5.0),
                           child: ListTile(
+                            onTap: (){
+                              navigate(context, SpecificOrderPage(
+                                items: list[index].items.items,
+                                model: model,
+                              ));
+                            },
                       contentPadding: EdgeInsets.symmetric(horizontal: 10),
                       tileColor: XColors.primaryColor.withOpacity(0.2),
                       title: NormalText(text: "Order From ${model.fullName}",
