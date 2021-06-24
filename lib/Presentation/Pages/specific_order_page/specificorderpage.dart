@@ -6,8 +6,8 @@ import 'package:zia/utils/size_config.dart';
 import 'package:zia/widgets/texts.dart';
 
 class SpecificOrderPage extends StatefulWidget {
-  List<OrderItem> items;
-  UserModel model;
+  final List<OrderItem> items;
+  final UserModel model;
   SpecificOrderPage({this.items, this.model});
   @override
   _SpecificOrderPageState createState() => _SpecificOrderPageState();
@@ -33,26 +33,57 @@ class _SpecificOrderPageState extends State<SpecificOrderPage> {
         ),
         backgroundColor: Colors.white,
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        child: Column(
-          children: [
-            Container(
-              height: SizeConfig.screenHeightDp * 0.8,
-              child: ListView.builder(
-                itemCount: widget.items.length,
-                itemBuilder: (context, index)
-            {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5.0),
-                child: ListTile(
-                  tileColor: index % 2 == 1? XColors.primaryColor.withOpacity(0.3) : XColors.primaryColor.withOpacity(0.6),
-                  title: NormalText(text: "${widget.items[index].itemName}",),
-                  subtitle: NormalText(text: "${widget.items[index].itemQuantity} at ${widget.items[index].itemPrice} each",),
+      body: SingleChildScrollView(
+              child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          child: Column(
+            children: [
+              Container(
+                height: SizeConfig.screenHeightDp * 0.6,
+                child: ListView.builder(
+                  itemCount: widget.items.length,
+                  itemBuilder: (context, index)
+              {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: ListTile(
+                    tileColor: index % 2 == 1? XColors.primaryColor.withOpacity(0.3) : XColors.primaryColor.withOpacity(0.6),
+                    title: NormalText(text: "${widget.items[index].itemName}",),
+                    subtitle: NormalText(text: "${widget.items[index].itemQuantity} at ${widget.items[index].itemPrice} each",),
+                  ),
+                );
+              }),),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
                 ),
-              );
-            }),)
-          ],
+                height: config.sh(80),
+                // child: ListTile(
+                //   tileColor: Colors.grey,
+                //   title: RichText(text: TextSpan(
+                //     text: "Buyer's name:  ",
+                //     style: TextStyle(color: Colors.black, fontSize: 18),
+                //     children: [
+                //       TextSpan(
+                //         text: "${widget.model.fullName}",
+                //         style: TextStyle(fontSize: 20,color: Colors.black, fontWeight: FontWeight.bold),
+                //       ),
+                //     ]
+                //   )),
+                //   subtitle: RichText(text: TextSpan(
+                //     text: "Buyer's Phone number:  ",
+                //     style: TextStyle(color: Colors.black, fontSize: 18),
+                //     children: [
+                //       TextSpan(
+                //         text: "${widget.model.phoneNumber}",
+                //         style: TextStyle(fontSize: 20,color: Colors.black, fontWeight: FontWeight.bold),
+                //       ),
+                //     ]
+                //   )),
+                // ),
+              ),
+            ],
+          ),
         ),
       ),
     );
