@@ -3,7 +3,7 @@ import 'package:zia/Domain/order_items.dart';
 
 class OrderModel{
   int totalCost;
-  bool status;
+  String status;
   DocumentReference buyerID;
   List<OrderItem> items;
   OrderModel({this.buyerID,this.items,this.totalCost,this.status});

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:zia/Domain/seller_order_model.dart';
 import 'package:zia/Domain/user_Model.dart';
 import 'package:zia/Presentation/Pages/specific_order_page/specificorderpage.dart';
+import 'package:zia/data/local/database/services/services.dart';
 import 'package:zia/utils/colors.dart';
 import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
@@ -53,6 +54,7 @@ class _OrderPageState extends State<OrderPage> {
           ).snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot){
             if(snapshot.hasData){
+              List<DocumentReference> refs = getRef(snapshot.data.docs);
               List<SellerOrderModel> list = snapshot.data.docs.map((e) => SellerOrderModel.fromSnapShot(e)).toList();
               return Container(
                 height: SizeConfig.screenHeightDp,
@@ -76,6 +78,7 @@ class _OrderPageState extends State<OrderPage> {
                               navigate(context, SpecificOrderPage(
                                 items: list[index].items.items,
                                 model: model,
+                                ref: refs[index],
                               ));
                             },
                       contentPadding: EdgeInsets.symmetric(horizontal: 10),
@@ -85,7 +88,7 @@ class _OrderPageState extends State<OrderPage> {
                       fontWeight: FontWeight.bold,
                     ),
                     subtitle: NormalText(text: "Total cost of Orders of is £${list[index].totalCost}"),
-                    trailing: Icon(Icons.circle_notifications_sharp,color: list[index].status == false? Colors.red : Colors.green,),
+                    trailing: Icon(Icons.circle_notifications_sharp,color: getColor(list[index].status),),
                     ),
                         );
                       }

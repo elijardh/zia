@@ -79,7 +79,7 @@ class CartVM extends ChangeNotifier {
         buyerID: FirebaseFirestore.instance.collection("users").doc(user.uid),
         totalCost: totalCost,
         items: items,
-        status: false);
+        status: "PENDING");
     print(model.items[0].itemRef);
     FirebaseFirestore.instance
         .collection("orders")

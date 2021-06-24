@@ -1,14 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:zia/Domain/order_items.dart';
 import 'package:zia/Domain/user_Model.dart';
+import 'package:zia/Presentation/Pages/send_order_page/sendorderpage.dart';
 import 'package:zia/utils/colors.dart';
+import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
+import 'package:zia/widgets/button.dart';
 import 'package:zia/widgets/texts.dart';
 
 class SpecificOrderPage extends StatefulWidget {
   final List<OrderItem> items;
+  final DocumentReference ref;
   final UserModel model;
-  SpecificOrderPage({this.items, this.model});
+  SpecificOrderPage({this.items, this.model, this.ref});
   @override
   _SpecificOrderPageState createState() => _SpecificOrderPageState();
 }
@@ -19,6 +24,11 @@ class _SpecificOrderPageState extends State<SpecificOrderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomSheet: XButton(onClick: (){
+        navigate(context, SendOrderPage(
+          ref: widget.ref,
+        ));
+      }, text: "Send Order",textColor: Colors.white,radius: 5,buttonColor: XColors.primaryColor,),
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
@@ -58,29 +68,29 @@ class _SpecificOrderPageState extends State<SpecificOrderPage> {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 height: config.sh(80),
-                // child: ListTile(
-                //   tileColor: Colors.grey,
-                //   title: RichText(text: TextSpan(
-                //     text: "Buyer's name:  ",
-                //     style: TextStyle(color: Colors.black, fontSize: 18),
-                //     children: [
-                //       TextSpan(
-                //         text: "${widget.model.fullName}",
-                //         style: TextStyle(fontSize: 20,color: Colors.black, fontWeight: FontWeight.bold),
-                //       ),
-                //     ]
-                //   )),
-                //   subtitle: RichText(text: TextSpan(
-                //     text: "Buyer's Phone number:  ",
-                //     style: TextStyle(color: Colors.black, fontSize: 18),
-                //     children: [
-                //       TextSpan(
-                //         text: "${widget.model.phoneNumber}",
-                //         style: TextStyle(fontSize: 20,color: Colors.black, fontWeight: FontWeight.bold),
-                //       ),
-                //     ]
-                //   )),
-                // ),
+                child: ListTile(
+                  tileColor: Colors.white.withOpacity(0.5),
+                  title: RichText(text: TextSpan(
+                    text: "Buyer's name:  ",
+                    style: TextStyle(color: Colors.black, fontSize: 18),
+                    children: [
+                      TextSpan(
+                        text: "${widget.model.fullName}",
+                        style: TextStyle(fontSize: 20,color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
+                    ]
+                  )),
+                  subtitle: RichText(text: TextSpan(
+                    text: "Buyer's Phone number:  ",
+                    style: TextStyle(color: Colors.black, fontSize: 18),
+                    children: [
+                      TextSpan(
+                        text: "${widget.model.phoneNumber}",
+                        style: TextStyle(fontSize: 20,color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
+                    ]
+                  )),
+                ),
               ),
             ],
           ),
