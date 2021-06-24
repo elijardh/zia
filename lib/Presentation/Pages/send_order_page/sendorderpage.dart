@@ -30,6 +30,8 @@ class _SendOrderPageState extends State<SendOrderPage> {
         text: "Send Order",
         buttonColor: XColors.primaryColor,
         radius: 5,
+        isLoading: context.watch<SendOrderVM>().loading,
+        progressColor: Colors.white,
         textColor: Colors.white,
         width: SizeConfig.screenWidthDp,
       ),
@@ -48,6 +50,7 @@ class _SendOrderPageState extends State<SendOrderPage> {
 
       ),
       body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
             YMargin(40),
@@ -56,24 +59,27 @@ class _SendOrderPageState extends State<SendOrderPage> {
               textColor: Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: 20,
+              maxLines: 3,
+              textAlign: TextAlign.center,
             ),
 
             Consumer<SendOrderVM>(
-              builder: (context, notifier, child) => InkWell(
-                onTap: notifier.uploadImage(),
+              builder: (context, notifier, child) => GestureDetector(
+                onTap:(){ notifier.uploadImage();},
                               child: Container(
-                  height: config.sh(400),
-                  width: SizeConfig.screenWidthDp,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: notifier.image != null ? FileImage(File(notifier.image.path)) : null,
+                    height: config.sh(200),
+                    width: SizeConfig.screenWidthDp,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: notifier.image != null ? FileImage(File(notifier.image.path)) : AssetImage("assets/images/Doodle.png"),
+                        fit: BoxFit.cover
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                      color: XColors.primaryColor.withOpacity(0.3),
+                    
                     ),
-                    borderRadius: BorderRadius.circular(10),
-                    color: XColors.primaryColor.withOpacity(0.3),
-                  
+                    // child: notifier.image == null ? Icon(Icons.camera_alt, color: Colors.black,) : null,
                   ),
-                  child: notifier.image == null ? Icon(Icons.camera_alt, color: Colors.black,) : null,
-                ),
               ),
             ),
           ],

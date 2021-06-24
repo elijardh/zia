@@ -5,7 +5,7 @@ import 'order_items.dart';
 class SellerOrderModel{
   DocumentReference buyer;
   OrderItemList items;
-  bool status;
+  String status;
   int totalCost;
   SellerOrderModel({this.items,this.status,this.totalCost,this.buyer});
 

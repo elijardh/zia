@@ -9,7 +9,7 @@ import 'package:zia/utils/colors.dart';
 class SendOrderVM extends ChangeNotifier{
   PickedFile image;
   Reference storageReference = FirebaseStorage.instance.ref();
-  bool loading;
+  bool loading = false;
 
     uploadImage() async {
     PickedFile temp =

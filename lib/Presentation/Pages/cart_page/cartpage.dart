@@ -105,78 +105,68 @@ class _CartPageState extends State<CartPage> {
                       child: ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          return Dismissible(
-                            background: Container(
-                              color: XColors.primaryColor.withOpacity(0.3),
-                              child: Center(
-                                child: Text("Delete"),
-                              ),
-                            ),
-                            onDismissed: (DismissDirection dir) {
-                              notifier.deleteFromList(
-                                  notifier.listModels[index].id, index);
+                          return ListTile(
+                            onLongPress: (){
+                              notifier.deleteFromList(notifier.listModels[index].id, index);
                             },
-                            key: ValueKey<int>(index),
-                            child: ListTile(
-                              title: SizedBox(
-                                width: config.sw(30),
-                                child: Text(
-                                  notifier.listModels[index].name,
-                                  maxLines: 10,
-                                  softWrap: true,
-                                  //textScaleFactor: 0.65,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                              ),
-                              subtitle: Text(
-                                "£${notifier.listModels[index].price.toString()}",
+                            title: SizedBox(
+                              width: config.sw(30),
+                              child: Text(
+                                notifier.listModels[index].name,
+                                maxLines: 10,
+                                softWrap: true,
+                                //textScaleFactor: 0.65,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: Colors.black.withOpacity(0.5)),
+                                    color: Colors.black),
                               ),
-                              leading: Icon(
-                                Icons.shopping_cart,
-                              ),
-                              trailing: Container(
-                                width: config.sw(80),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    GestureDetector(
-                                        onTap: () {
-                                          notifier.increaseAmount(index);
-                                        },
-                                        child: Icon(
-                                          Icons.add,
-                                          color: Colors.black,
-                                        )),
-                                    XMargin(10),
-                                    Text("${notifier.listModels[index].amount}",
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: XColors.primaryColor)),
-                                    XMargin(10),
-                                    GestureDetector(
+                            ),
+                            subtitle: Text(
+                              "£${notifier.listModels[index].price.toString()}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.black.withOpacity(0.5)),
+                            ),
+                            leading: Icon(
+                              Icons.shopping_cart,
+                            ),
+                            trailing: Container(
+                              width: config.sw(80),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  GestureDetector(
                                       onTap: () {
-                                        notifier.decreasesAmount(index);
+                                        notifier.increaseAmount(index);
                                       },
                                       child: Icon(
-                                        Icons.remove,
+                                        Icons.add,
                                         color: Colors.black,
-                                      ),
-                                    )
-                                  ],
-                                ),
+                                      )),
+                                  XMargin(10),
+                                  Text("${notifier.listModels[index].amount}",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: XColors.primaryColor)),
+                                  XMargin(10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      notifier.decreasesAmount(index);
+                                    },
+                                    child: Icon(
+                                      Icons.remove,
+                                      color: Colors.black,
+                                    ),
+                                  )
+                                ],
                               ),
-/*                          trailing: Text(
-                                  "${notifier.listModels[index].amount.toString()} pieces"),*/
                             ),
+/*                          trailing: Text(
+                                "${notifier.listModels[index].amount.toString()} pieces"),*/
                           );
                         },
                         itemCount: notifier.listModels.length,

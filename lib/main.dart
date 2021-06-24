@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zia/Presentation/Pages/LoginPage/login.dart';
+import 'package:zia/Presentation/ViewModel/send_order_vm/sendodervm.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:zia/utils/envConfig.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,6 +33,7 @@ void main() async {
         ChangeNotifierProvider<CartVM>(create: (_) => CartVM()),
         ChangeNotifierProvider<LoginVM>(create: (_) => LoginVM()),
         ChangeNotifierProvider<UploadVM>(create: (_) => UploadVM()),
+        ChangeNotifierProvider<SendOrderVM>(create: (_)=> SendOrderVM(),)
       ],
       child: MyApp(
         email: mail,
@@ -59,7 +61,7 @@ class MyApp extends StatelessWidget {
         SizeConfig.init(context,
             width: size.width, height: size.height, allowFontScaling: true);
 
-        return LoginPage();
+        return HomePage();
       }),
     );
   }

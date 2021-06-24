@@ -56,7 +56,9 @@ class _OrderPageState extends State<OrderPage> {
             if(snapshot.hasData){
               List<DocumentReference> refs = getRef(snapshot.data.docs);
               List<SellerOrderModel> list = snapshot.data.docs.map((e) => SellerOrderModel.fromSnapShot(e)).toList();
-              return Container(
+
+              if(list.isNotEmpty){
+                return Container(
                 height: SizeConfig.screenHeightDp,
                 child: ListView.builder(
                   itemCount: list.length,
@@ -99,13 +101,19 @@ class _OrderPageState extends State<OrderPage> {
                   );
                 }),
               );
+              }
+              else{
+                return Container(
+                child: Center(child: TitleText(text: "No Order",),),
+              );
+              }
+              
             }
-            else if(!snapshot.hasData){
+            else {
               return Container(
                 child: Center(child: TitleText(text: "No Order",),),
               );
             }
-            return Container();
           },
         ),
       ),

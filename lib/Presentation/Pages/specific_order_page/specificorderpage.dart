@@ -28,7 +28,9 @@ class _SpecificOrderPageState extends State<SpecificOrderPage> {
         navigate(context, SendOrderPage(
           ref: widget.ref,
         ));
-      }, text: "Send Order",textColor: Colors.white,radius: 5,buttonColor: XColors.primaryColor,),
+      }, text: "Send Order",textColor: Colors.white,radius: 5,buttonColor: XColors.primaryColor,
+      width: SizeConfig.screenWidthDp,
+      ),
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,

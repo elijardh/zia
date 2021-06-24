@@ -34,7 +34,7 @@ class CartVM extends ChangeNotifier {
     });
   }
 
-  deleteFromList(int id, int index) {
+  Future deleteFromList(int id, int index) async {
     DatabaseProvider.instance.deleteCart(id).then((value) {
       listModels.removeAt(index);
       notifyListeners();
