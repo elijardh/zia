@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +29,7 @@ class SendOrderVM extends ChangeNotifier{
   }
 
   Future sendOrder(DocumentReference ref, String img, BuildContext context) async{
-     FirebaseFirestore.instance.collection("products").doc().set({
+     FirebaseFirestore.instance.collection("sentorder").doc().set({
        "image" : img,
        "orderRef" : ref,
      }).onError((error, stackTrace) {
@@ -52,7 +51,6 @@ class SendOrderVM extends ChangeNotifier{
     uploadImageFire().then((value) { 
       sendOrder(ref,value,context);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        
         backgroundColor: XColors.primaryColor,
         content: Text("Order sent succesfully, send the physical prdocut via logistics",style: TextStyle(color:Colors.white),),
       ));
