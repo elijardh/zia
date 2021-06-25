@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class OrderItem{
+class OrderItem {
   String itemName;
   int itemPrice;
   int itemQuantity;
   DocumentReference itemRef;
 
-  OrderItem({this.itemName,this.itemPrice,this.itemQuantity,this.itemRef});
+  OrderItem({this.itemName, this.itemPrice, this.itemQuantity, this.itemRef});
 
-  Map<String, dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     Map<String, dynamic> data = Map<String, dynamic>();
     data["itemName"] = this.itemName;
     data["itemPrice"] = this.itemPrice;
@@ -17,7 +17,7 @@ class OrderItem{
     return data;
   }
 
-  factory OrderItem.fromJson(Map<String, dynamic> json){
+  factory OrderItem.fromJson(Map<String, dynamic> json) {
     return OrderItem(
       itemQuantity: json["itemQuantity"],
       itemPrice: json["itemPrice"],
@@ -25,18 +25,15 @@ class OrderItem{
       itemRef: json["itemRef"],
     );
   }
-
 }
 
-class OrderItemList{
+class OrderItemList {
   List<OrderItem> items;
   OrderItemList({this.items});
 
-  factory  OrderItemList.fromList(List<dynamic> json){
+  factory OrderItemList.fromList(List<dynamic> json) {
     List<OrderItem> list = [];
     list = json.map((m) => OrderItem.fromJson(m)).toList();
-    return OrderItemList(
-      items: list
-    );
+    return OrderItemList(items: list);
   }
 }

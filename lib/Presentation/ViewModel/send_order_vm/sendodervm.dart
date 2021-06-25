@@ -6,19 +6,19 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:zia/utils/colors.dart';
 
-class SendOrderVM extends ChangeNotifier{
+class SendOrderVM extends ChangeNotifier {
   PickedFile image;
   Reference storageReference = FirebaseStorage.instance.ref();
   bool loading = false;
 
-    uploadImage() async {
+  uploadImage() async {
     PickedFile temp =
         await ImagePicker.platform.pickImage(source: ImageSource.gallery);
     image = temp;
     notifyListeners();
   }
 
-    Future<String> uploadImageFire() async {
+  Future<String> uploadImageFire() async {
     String name = image.path.split("/").last;
     Reference ref = storageReference.child("/productimage");
     UploadTask task = ref.child(name).putFile(File(image.path));
@@ -28,33 +28,40 @@ class SendOrderVM extends ChangeNotifier{
     return url;
   }
 
-  Future sendOrder(DocumentReference ref, String img, BuildContext context) async{
-     FirebaseFirestore.instance.collection("sentorder").doc().set({
-       "image" : img,
-       "orderRef" : ref,
-     }).onError((error, stackTrace) {
-       loading = false;
-       notifyListeners();
-       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-         content: Text("${error.toString()}"),
-         backgroundColor: XColors.primaryColor,
-       ));
-     }).then((value) {
-       loading = false;
-       notifyListeners();
-     });
+  Future sendOrder(
+      DocumentReference ref, String img, BuildContext context) async {
+    FirebaseFirestore.instance.collection("sentorder").doc().set({
+      "image": img,
+      "orderRef": ref,
+    }).onError((error, stackTrace) {
+      loading = false;
+      notifyListeners();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("${error.toString()}"),
+        backgroundColor: XColors.primaryColor,
+      ));
+    }).then((value) {
+      loading = false;
+      notifyListeners();
+    });
   }
 
-  Future finalUpload(DocumentReference ref, BuildContext context){
+  Future finalUpload(DocumentReference ref, BuildContext context) {
     loading = true;
     notifyListeners();
-    uploadImageFire().then((value) { 
-      sendOrder(ref,value,context);
+    uploadImageFire().then((value) {
+      sendOrder(ref, value, context);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: XColors.primaryColor,
-        content: Text("Order sent succesfully, send the physical prdocut via logistics",style: TextStyle(color:Colors.white),),
+        content: Text(
+          "Order sent succesfully, send the physical product via logistics",
+          style: TextStyle(color: Colors.white),
+        ),
       ));
-      }).onError((error, stackTrace) { ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${error.toString()}"),));});   
+    }).onError((error, stackTrace) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("${error.toString()}"),
+      ));
+    });
   }
-
 }
