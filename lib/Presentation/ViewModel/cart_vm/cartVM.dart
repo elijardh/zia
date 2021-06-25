@@ -11,16 +11,23 @@ import 'package:zia/Domain/models/metadata.dart';
 import 'package:zia/Domain/order_items.dart';
 import 'package:zia/Domain/order_model.dart';
 import 'package:zia/Domain/user_Model.dart';
+import 'package:zia/Presentation/Pages/HomePage/HomePage.dart';
+import 'package:zia/Presentation/Pages/order_page/orderpage.dart';
 import 'package:zia/data/local/database/database.dart';
 import 'package:zia/data/network/FireBase/User/fire_user.dart';
 import 'package:zia/data/network/pay_stack/paystack_charge.dart';
 import 'package:zia/utils/colors.dart';
+import 'package:zia/utils/navigator.dart';
+import 'package:zia/utils/size_config.dart';
+import 'package:zia/widgets/button.dart';
 import 'package:zia/widgets/texts.dart';
+import 'package:zia/widgets/y_margin.dart';
 
 class CartVM extends ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;
   List<CartModel> listModels = [];
   int totalCost = 0;
+  bool loading = false;
 
   addToList(BuildContext context) async {
     DatabaseProvider.instance.getCart().then((value) {
@@ -94,6 +101,8 @@ class CartVM extends ChangeNotifier {
       "items": model.toJson(model.items),
       "status": model.status
     }).then((value) {
+      loading = false;
+      notifyListeners();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
           "OrderPlaced",
@@ -101,7 +110,54 @@ class CartVM extends ChangeNotifier {
         ),
         backgroundColor: XColors.primaryColor,
       ));
+
+      SizeConfig config = SizeConfig();
+      showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+                  content: Container(
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/images/Doodle.png"),
+                        fit: BoxFit.fill)),
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                height: config.sh(200),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    NormalText(
+                      text: "Your Order Has Been Sent",
+                      textColor: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    YMargin(20),
+                    XButton(
+                      onClick: () {
+                        navigateReplace(context, OrderPage());
+                      },
+                      text: "Go to Orders",
+                      buttonColor: Colors.red,
+                      radius: 10,
+                      textColor: Colors.white,
+                      width: SizeConfig.screenWidthDp,
+                    ),
+                    YMargin(20),
+                    XButton(
+                      onClick: () {
+                        navigateReplace(context, HomePage());
+                      },
+                      text: "Go Home",
+                      buttonColor: Colors.green,
+                      radius: 10,
+                      textColor: Colors.white,
+                      width: SizeConfig.screenWidthDp,
+                    ),
+                  ],
+                ),
+              )));
     }).onError((error, stackTrace) {
+      loading = false;
+      notifyListeners();
       print(stackTrace.toString());
       print(error);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -114,8 +170,14 @@ class CartVM extends ChangeNotifier {
     });
   }
 
-  Future cartPayment(String cvv, String exp, String cardNum, String pin,
-      BuildContext context) async {
+  Future cartPayment(
+      {String cvv,
+      String exp,
+      String cardNum,
+      String pin,
+      BuildContext context}) async {
+    loading = true;
+    notifyListeners();
     UserModel model = await getUser();
     Cardd card = Cardd(
       cvv: cvv,
@@ -134,6 +196,8 @@ class CartVM extends ChangeNotifier {
       metadata: dat,
     );
     payMyMoney(chargeClass).onError((error, stackTrace) {
+      loading = false;
+      notifyListeners();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: NormalText(
           text: error.toString(),
@@ -142,9 +206,9 @@ class CartVM extends ChangeNotifier {
         ),
         backgroundColor: Colors.white,
       ));
-    }).then((value) {
-      saveResponse(value, context);
-      placeOrder(context);
+    }).then((value) async {
+      //saveResponse(value, context);
+      await placeOrder(context);
     });
   }
 

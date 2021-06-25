@@ -18,7 +18,7 @@ Future<ChargeResponse> payMyMoney(ChargeClass charge) async {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       final jsonBody = jsonDecode(response.body);
-      ChargeResponse respons = ChargeResponse.fromJson(jsonBody);
+      ChargeResponse respons;
       return respons;
     } else {
       throw Exception("Something went wrong");

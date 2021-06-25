@@ -15,7 +15,6 @@ class Data {
   String channel;
   String currency;
   String ipAddress;
-  Metadata metadata;
   dynamic log;
   int fees;
   dynamic feesSplit;
@@ -41,7 +40,6 @@ class Data {
     this.channel,
     this.currency,
     this.ipAddress,
-    this.metadata,
     this.log,
     this.fees,
     this.feesSplit,
@@ -68,9 +66,6 @@ class Data {
         channel: json['channel'] as String,
         currency: json['currency'] as String,
         ipAddress: json['ip_address'] as String,
-        metadata: json['metadata'] == null
-            ? null
-            : Metadata.fromJson(json['metadata'] as Map<String, dynamic>),
         log: json['log'],
         fees: json['fees'] as int,
         feesSplit: json['fees_split'],
@@ -102,7 +97,6 @@ class Data {
         'channel': channel,
         'currency': currency,
         'ip_address': ipAddress,
-        'metadata': metadata?.toJson(),
         'log': log,
         'fees': fees,
         'fees_split': feesSplit,

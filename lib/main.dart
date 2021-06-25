@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
         SizeConfig.init(context,
             width: size.width, height: size.height, allowFontScaling: true);
 
-        return LoginPage();
+        return HomePage();
       }),
     );
   }

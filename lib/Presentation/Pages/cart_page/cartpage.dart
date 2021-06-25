@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zia/Presentation/Pages/HomePage/HomePage.dart';
 import 'package:zia/Presentation/Pages/check_out_page/checkoutpage.dart';
+import 'package:zia/Presentation/Pages/order_page/orderpage.dart';
 import 'package:zia/Presentation/ViewModel/cart_vm/cartVM.dart';
 import 'package:zia/utils/colors.dart';
 import 'package:zia/utils/navigator.dart';
