@@ -3,7 +3,6 @@ import 'package:zia/Domain/ProductModel.dart';
 import 'package:zia/Domain/cartModel.dart';
 import 'package:zia/Presentation/Views/catalog_dialog.dart';
 import 'package:zia/utils/colors.dart';
-import 'package:zia/utils/navigator.dart';
 import 'package:zia/utils/size_config.dart';
 import 'package:zia/widgets/button.dart';
 import 'package:zia/widgets/texts.dart';
@@ -20,10 +19,6 @@ class ProductInfo extends StatefulWidget {
 
 class _ProductInfoState extends State<ProductInfo> {
   addToCart() {
-    print("hello");
-    //int p = (widget.model.price).cast<int>();
-    //print(p.toString());
-
     CartModel cartMod = CartModel(
         objID: widget.model.id.toString(),
         amount: 1,
