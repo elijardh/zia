@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zia/Presentation/Pages/HomePage/HomePage.dart';
+import 'package:zia/Presentation/Pages/check_out_page/checkoutpage.dart';
 import 'package:zia/Presentation/ViewModel/cart_vm/cartVM.dart';
 import 'package:zia/utils/colors.dart';
 import 'package:zia/utils/navigator.dart';
@@ -56,7 +57,12 @@ class _CartPageState extends State<CartPage> {
       bottomSheet: context.watch<CartVM>().listModels.isNotEmpty
           ? XButton(
               onClick: () {
-                context.read<CartVM>().placeOrder(context);
+                // context.read<CartVM>().placeOrder(context);
+                showDialog(
+                    context: context,
+                    builder: (context) => CheckOutPage(
+                          cost: context.watch<CartVM>().totalCost.toString(),
+                        ));
               },
               text: "CHECK OUT",
               textColor: Colors.white,
@@ -106,8 +112,9 @@ class _CartPageState extends State<CartPage> {
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           return ListTile(
-                            onLongPress: (){
-                              notifier.deleteFromList(notifier.listModels[index].id, index);
+                            onLongPress: () {
+                              notifier.deleteFromList(
+                                  notifier.listModels[index].id, index);
                             },
                             title: SizedBox(
                               width: config.sw(30),

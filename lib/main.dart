@@ -33,7 +33,9 @@ void main() async {
         ChangeNotifierProvider<CartVM>(create: (_) => CartVM()),
         ChangeNotifierProvider<LoginVM>(create: (_) => LoginVM()),
         ChangeNotifierProvider<UploadVM>(create: (_) => UploadVM()),
-        ChangeNotifierProvider<SendOrderVM>(create: (_)=> SendOrderVM(),)
+        ChangeNotifierProvider<SendOrderVM>(
+          create: (_) => SendOrderVM(),
+        )
       ],
       child: MyApp(
         email: mail,
@@ -55,13 +57,12 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),*/
       home: Builder(builder: (BuildContext context) {
-        
         BuildEnvironment.init(flavor: BuildFlavor.development);
         Size size = MediaQuery.of(context).size;
         SizeConfig.init(context,
             width: size.width, height: size.height, allowFontScaling: true);
 
-        return HomePage();
+        return LoginPage();
       }),
     );
   }

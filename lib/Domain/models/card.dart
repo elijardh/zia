@@ -1,12 +1,12 @@
-class Card {
+class Cardd {
   String cvv;
   String number;
   String expiryMonth;
   String expiryYear;
 
-  Card({this.cvv, this.number, this.expiryMonth, this.expiryYear});
+  Cardd({this.cvv, this.number, this.expiryMonth, this.expiryYear});
 
-  factory Card.fromJson(Map<String, dynamic> json) => Card(
+  factory Cardd.fromJson(Map<String, dynamic> json) => Cardd(
         cvv: json['cvv'] as String,
         number: json['number'] as String,
         expiryMonth: json['expiry_month'] as String,

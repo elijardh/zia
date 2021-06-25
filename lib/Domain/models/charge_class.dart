@@ -5,7 +5,7 @@ class ChargeClass {
   String email;
   String amount;
   Metadata metadata;
-  Card card;
+  Cardd card;
   String pin;
 
   ChargeClass({
@@ -24,7 +24,7 @@ class ChargeClass {
             : Metadata.fromJson(json['metadata'] as Map<String, dynamic>),
         card: json['card'] == null
             ? null
-            : Card.fromJson(json['card'] as Map<String, dynamic>),
+            : Cardd.fromJson(json['card'] as Map<String, dynamic>),
         pin: json['pin'] as String,
       );
 
