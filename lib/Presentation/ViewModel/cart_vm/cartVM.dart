@@ -1,15 +1,14 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zia/Domain/cartModel.dart';
 import 'package:zia/Domain/models/card.dart';
 import 'package:zia/Domain/models/charge_class.dart';
-import 'package:zia/Domain/models/charge_response.dart';
 import 'package:zia/Domain/models/metadata.dart';
 import 'package:zia/Domain/order_items.dart';
 import 'package:zia/Domain/order_model.dart';
+import 'package:zia/Domain/response/chargeresponse.dart';
 import 'package:zia/Domain/user_Model.dart';
 import 'package:zia/Presentation/Pages/HomePage/HomePage.dart';
 import 'package:zia/Presentation/Pages/order_page/orderpage.dart';
@@ -195,7 +194,10 @@ class CartVM extends ChangeNotifier {
       pin: pin,
       metadata: dat,
     );
-    payMyMoney(chargeClass).onError((error, stackTrace) {
+    payMyMoney(chargeClass).then((value) async {
+      await saveResponse(value, context);
+      await placeOrder(context);
+    }).onError((error, stackTrace) {
       loading = false;
       notifyListeners();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -206,9 +208,6 @@ class CartVM extends ChangeNotifier {
         ),
         backgroundColor: Colors.white,
       ));
-    }).then((value) async {
-      //saveResponse(value, context);
-      await placeOrder(context);
     });
   }
 

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:zia/Domain/models/charge_class.dart';
-import 'package:zia/Domain/models/charge_response.dart';
+import 'package:zia/Domain/response/chargeresponse.dart';
 import 'package:zia/data/network/API/API%20Url/Urls.dart';
 
 Future<ChargeResponse> payMyMoney(ChargeClass charge) async {
@@ -18,7 +18,7 @@ Future<ChargeResponse> payMyMoney(ChargeClass charge) async {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       final jsonBody = jsonDecode(response.body);
-      ChargeResponse respons;
+      ChargeResponse respons = ChargeResponse.fromJson(jsonBody);
       return respons;
     } else {
       throw Exception("Something went wrong");

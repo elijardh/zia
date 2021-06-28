@@ -1,14 +1,14 @@
 import 'Data.dart';
 
-class chargeresponse {
+class ChargeResponse {
     Data data;
     String message;
     bool status;
 
-    chargeresponse({this.data, this.message, this.status});
+    ChargeResponse({this.data, this.message, this.status});
 
-    factory chargeresponse.fromJson(Map<String, dynamic> json) {
-        return chargeresponse(
+    factory ChargeResponse.fromJson(Map<String, dynamic> json) {
+        return ChargeResponse(
             data: json['`data`'] != null ? Data.fromJson(json['`data`']) : null,
             message: json['message'], 
             status: json['status'], 
