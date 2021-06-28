@@ -53,6 +53,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   height: config.sh(100),
                   width: SizeConfig.screenWidthDp,
                   child: XTextField(
+                    focusedBorderColor: Colors.black.withOpacity(0.1),
                     controller: cardCtrl,
                     fillColor: XColors.primaryColor.withOpacity(0.3),
                     hintText: "Type your card number here",
@@ -73,6 +74,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                       height: config.sh(100),
                       width: SizeConfig.screenWidthDp * 0.35,
                       child: XTextField(
+                          focusedBorderColor: Colors.black.withOpacity(0.1),
                           controller: cardExp,
                           hintText: "Card exp month/year",
                           validator: (value) {
@@ -86,6 +88,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                       height: config.sh(100),
                       width: SizeConfig.screenWidthDp * 0.3,
                       child: XTextField(
+                          focusedBorderColor: Colors.black.withOpacity(0.1),
                           controller: cardCvv,
                           hintText: "Card CVV",
                           validator: (value) {
@@ -102,6 +105,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   height: config.sh(100),
                   width: SizeConfig.screenWidthDp,
                   child: XTextField(
+                      focusedBorderColor: Colors.black.withOpacity(0.1),
                       controller: cardPin,
                       hintText: "Card Pin",
                       validator: (value) {

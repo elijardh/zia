@@ -213,7 +213,7 @@ class CartVM extends ChangeNotifier {
 
   Future saveResponse(ChargeResponse res, context) {
     FirebaseFirestore.instance
-        .collection("products")
+        .collection("invoice")
         .doc()
         .set(res.toJson())
         .then((value) {

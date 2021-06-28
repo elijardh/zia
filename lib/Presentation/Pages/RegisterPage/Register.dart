@@ -29,26 +29,9 @@ class _RegisterState extends State<Register> {
       phoneNumber: phoneNumber.text,
     );
     RegisterClass.register(userModel, _scaffoldKey, context);
-/*    print(email.value.text);
-      try{
-        UserCredential user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email.value.text, password: password.value.text);
-        FirebaseFirestore.instance.collection("users").doc().set(
-          {"email": email.value.text, "phoneNumber": phoneNumber.value.text},);
-        navigate(context, HomePage(name: email.text,));
-      }
-      catch(error){
-        final snackBar = SnackBar(
-          content: Text(error.toString()),
-          backgroundColor: Colors.blue,
-          duration: Duration(
-              seconds: 5
-          ),
-        );
-        _scaffoldKey.currentState.showSnackBar(snackBar);
-        print(error.toString());
-      }*/
   }
 
+  bool obscure = true;
   SizeConfig config = new SizeConfig();
   @override
   Widget build(BuildContext context) {
@@ -57,7 +40,7 @@ class _RegisterState extends State<Register> {
         key: _scaffoldKey,
         body: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 10),
             color: Colors.white,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -122,7 +105,7 @@ class _RegisterState extends State<Register> {
                       YMargin(10),
                       EUnderLineButton(
                         controller: email,
-                        hintText: "Emial",
+                        hintText: "Email",
                         hintTextColor: Colors.black,
                         fillColor: XColors.primaryColor.withOpacity(0.2),
                         enabledBorderColor: XColors.primaryColor,
@@ -139,7 +122,18 @@ class _RegisterState extends State<Register> {
                       ),
                       YMargin(10),
                       EUnderLineButton(
-                        obscureText: true,
+                        obscureText: obscure,
+                        suffix: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                obscure = !obscure;
+                              });
+                            },
+                            child: Icon(
+                              Icons.remove_red_eye_outlined,
+                              size: 20,
+                              color: Colors.black.withOpacity(0.5),
+                            )),
                         controller: password,
                         hintText: "Password",
                         hintTextColor: Colors.black,

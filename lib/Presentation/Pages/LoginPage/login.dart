@@ -18,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController email = new TextEditingController();
   final TextEditingController password = new TextEditingController();
 
+  bool obscure = true;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -61,7 +62,18 @@ class _LoginPageState extends State<LoginPage> {
                   textColor: Colors.black,
                 ),
                 EUnderLineButton(
-                  obscureText: true,
+                  suffix: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          obscure = !obscure;
+                        });
+                      },
+                      child: Icon(
+                        Icons.remove_red_eye_outlined,
+                        size: 20,
+                        color: Colors.black.withOpacity(0.5),
+                      )),
+                  obscureText: obscure,
                   controller: password,
                   hintText: "tt......",
                   hintTextColor: Colors.black,
@@ -87,7 +99,8 @@ class _LoginPageState extends State<LoginPage> {
                   text: "Login",
                   textColor: Colors.white,
                   buttonColor: XColors.primaryColor,
-                  radius: 10,
+                  radius: 5,
+                  progressColor: Colors.white,
                   width: SizeConfig.screenWidthDp,
                 ),
                 YMargin(20),
