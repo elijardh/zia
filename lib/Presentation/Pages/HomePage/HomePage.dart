@@ -77,6 +77,24 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(40),
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              height: config.sh(35),
+              width: SizeConfig.screenWidthDp,
+              child: ListView.builder(
+                itemCount: catalogWidget.length,
+                itemBuilder: (context, index) {
+                  return Catalogs(
+                    catalogTitle: catalogWidget[index],
+                    index: index,
+                  );
+                },
+                scrollDirection: Axis.horizontal,
+              ),
+            ),
+          ),
           actions: [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -134,25 +152,25 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15),
+          padding: EdgeInsets.symmetric(horizontal: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              YMargin(25),
-              Container(
-                height: config.sh(35),
-                width: SizeConfig.screenWidthDp,
-                child: ListView.builder(
-                  itemCount: catalogWidget.length,
-                  itemBuilder: (context, index) {
-                    return Catalogs(
-                      catalogTitle: catalogWidget[index],
-                      index: index,
-                    );
-                  },
-                  scrollDirection: Axis.horizontal,
-                ),
-              ),
+              // YMargin(25),
+              // Container(
+              //   height: config.sh(35),
+              //   width: SizeConfig.screenWidthDp,
+              //   child: ListView.builder(
+              //     itemCount: catalogWidget.length,
+              //     itemBuilder: (context, index) {
+              //       return Catalogs(
+              //         catalogTitle: catalogWidget[index],
+              //         index: index,
+              //       );
+              //     },
+              //     scrollDirection: Axis.horizontal,
+              //   ),
+              // ),
               YMargin(20),
               TitleText(
                 text: "Trending!!!",
@@ -206,6 +224,12 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
               ),
+              Divider(
+                color: XColors.primaryColor,
+                //height: config.sh(10),
+                thickness: 10,
+              ),
+              YMargin(10),
               StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection("products")
@@ -228,7 +252,7 @@ class _HomePageState extends State<HomePage> {
                         shrinkWrap: true,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          crossAxisSpacing: 1,
+                          crossAxisSpacing: 10,
                           mainAxisSpacing: 5,
                         ),
                         itemBuilder: (context, index) => InkWell(
