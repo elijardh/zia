@@ -132,28 +132,38 @@ class _RegisterState extends State<Register> {
                         ),
                         YMargin(10),
                         EUnderLineButton(
-                          obscureText: obscure,
-                          suffix: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  obscure = !obscure;
-                                });
-                              },
-                              child: Icon(
-                                Icons.remove_red_eye_outlined,
-                                size: 20,
-                                color: Colors.black.withOpacity(0.5),
-                              )),
-                          controller: password,
-                          hintText: "Password",
-                          hintTextColor: Colors.black,
-                          fillColor: XColors.primaryColor.withOpacity(0.2),
-                          enabledBorderColor: XColors.primaryColor,
-                          focusedBorderColor: XColors.primaryColor,
-                          validator: (String val) {
-                            PasswordValidiator();
-                          },
-                        ),
+                            obscureText: obscure,
+                            suffix: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    obscure = !obscure;
+                                  });
+                                },
+                                child: Icon(
+                                  Icons.remove_red_eye_outlined,
+                                  size: 20,
+                                  color: Colors.black.withOpacity(0.5),
+                                )),
+                            controller: password,
+                            hintText: "Password",
+                            hintTextColor: Colors.black,
+                            fillColor: XColors.primaryColor.withOpacity(0.2),
+                            enabledBorderColor: XColors.primaryColor,
+                            focusedBorderColor: XColors.primaryColor,
+                            validator: (String val) {
+                              Pattern pattern =
+                                  r'(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])';
+                              RegExp regex = RegExp(pattern);
+                              print(val);
+                              if (val.isEmpty) {
+                                return "Enter a password";
+                              } else if (val.length < 6 ||
+                                  (!regex.hasMatch(val))) {
+                                return "Password not strong enough";
+                              } else {
+                                return null;
+                              }
+                            }),
                         YMargin(50),
                         NormalText(
                           text: "Phone Number",

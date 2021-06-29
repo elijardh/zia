@@ -22,6 +22,7 @@ class _UploadPageState extends State<UploadPage> {
   TextEditingController productCost = TextEditingController();
   TextEditingController productAmount = TextEditingController();
   TextEditingController productDescription = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey();
 
   String category;
   PickedFile _fileImage;
@@ -41,15 +42,17 @@ class _UploadPageState extends State<UploadPage> {
         bottomSheet: XButton(
           progressColor: Colors.white,
           onClick: () {
-            print("hello");
-            print(productName.value.text);
-            context.read<UploadVM>().fullUpload(
-                context: context,
-                price: int.parse(productCost.value.text),
-                amount: productAmount.value.text,
-                category: category,
-                description: productDescription.value.text,
-                title: productName.value.text);
+            if (_formKey.currentState.validate()) {
+              print("hello");
+              print(productName.value.text);
+              context.read<UploadVM>().fullUpload(
+                  context: context,
+                  price: int.parse(productCost.value.text),
+                  amount: productAmount.value.text,
+                  category: category,
+                  description: productDescription.value.text,
+                  title: productName.value.text);
+            }
           },
           text: "Upload Product",
           isLoading: context.watch<UploadVM>().uploading,
@@ -129,6 +132,7 @@ class _UploadPageState extends State<UploadPage> {
                 textColor: Colors.black,
               ),
               Form(
+                key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -143,6 +147,12 @@ class _UploadPageState extends State<UploadPage> {
                       fillColor: XColors.primaryColor.withOpacity(0.2),
                       enabledBorderColor: XColors.primaryColor,
                       focusedBorderColor: XColors.primaryColor,
+                      validator: (text) {
+                        if (text.isEmpty) {
+                          return "Type in a product name";
+                        }
+                        return null;
+                      },
                     ),
                     YMargin(20),
                     NormalText(
@@ -156,6 +166,12 @@ class _UploadPageState extends State<UploadPage> {
                       fillColor: XColors.primaryColor.withOpacity(0.2),
                       enabledBorderColor: XColors.primaryColor,
                       focusedBorderColor: XColors.primaryColor,
+                      validator: (text) {
+                        if (text.isEmpty) {
+                          return "Type in a product cost";
+                        }
+                        return null;
+                      },
                     ),
                     YMargin(20),
                     NormalText(
@@ -169,6 +185,12 @@ class _UploadPageState extends State<UploadPage> {
                       fillColor: XColors.primaryColor.withOpacity(0.2),
                       enabledBorderColor: XColors.primaryColor,
                       focusedBorderColor: XColors.primaryColor,
+                      validator: (text) {
+                        if (text.isEmpty) {
+                          return "Type in a product amount";
+                        }
+                        return null;
+                      },
                     ),
                     YMargin(20),
                     NormalText(
@@ -213,12 +235,18 @@ class _UploadPageState extends State<UploadPage> {
                         }).toList(),
                       ),
                     ),
-                    YMargin(50),
+                    YMargin(20),
                     Container(
-                      height: config.sh(200),
+                      height: config.sh(100),
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       color: XColors.primaryColor.withOpacity(0.3),
-                      child: TextField(
+                      child: TextFormField(
+                        validator: (text) {
+                          if (text.isEmpty) {
+                            return "Give a description";
+                          }
+                          return null;
+                        },
                         //expands: true,
                         maxLines: 1000,
                         decoration: InputDecoration(
@@ -228,7 +256,8 @@ class _UploadPageState extends State<UploadPage> {
                         ),
                         controller: productDescription,
                       ),
-                    )
+                    ),
+                    YMargin(80),
                   ],
                 ),
               ),

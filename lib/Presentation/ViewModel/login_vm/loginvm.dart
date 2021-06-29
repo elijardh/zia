@@ -25,6 +25,8 @@ class LoginVM extends ChangeNotifier {
         backgroundColor: XColors.primaryColor,
       ));
     }).catchError((e) {
+      log = false;
+      notifyListeners();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: NormalText(
           text: e.toString(),
