@@ -46,6 +46,7 @@ class _RegisterState extends State<Register> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                YMargin(10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:zia/Domain/ProductListModel.dart';
 import 'package:zia/Domain/ProductModel.dart';
 import 'package:zia/Domain/firebaseModel.dart';
@@ -124,7 +125,6 @@ class _HomePageState extends State<HomePage> {
                 color: XColors.primaryColor,
                 size: 30,
               ),
-              
               onPressed: () {
                 print("hello");
                 Scaffold.of(context).openDrawer();
@@ -132,8 +132,7 @@ class _HomePageState extends State<HomePage> {
             ),
           )),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-          child: Container(
+      body: Container(
         padding: EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,24 +220,32 @@ class _HomePageState extends State<HomePage> {
                   List<ProductModel> list = snapshot.data.docs
                       .map((e) => ProductModel.fromSnapshot(e))
                       .toList();
-                  return Container(
-                    height: config.sh(250),
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
+                  return SingleChildScrollView(
+                    child: Expanded(
+                      child: StaggeredGridView.builder(
+                        gridDelegate:
+                            SliverStaggeredGridDelegateWithFixedCrossAxisCount(
+                          staggeredTileBuilder: (index) =>
+                              StaggeredTile.count(2, index.isEven ? 2 : 1),
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 2,
+                          mainAxisSpacing: 2,
+                        ),
+                        itemBuilder: (context, index) => InkWell(
+                            onTap: () {
+                              navigate(
+                                  context,
+                                  ProductInfo(
+                                    model: list[index],
+                                  ));
+                            },
+                            child: HomePageWidget(
+                              model: list[index],
+                            )),
                         itemCount: list.length,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                              onTap: () {
-                                navigate(
-                                    context,
-                                    ProductInfo(
-                                      model: list[index],
-                                    ));
-                              },
-                              child: HomePageWidget(
-                                model: list[index],
-                              ));
-                        }),
+                        scrollDirection: Axis.vertical,
+                      ),
+                    ),
                   );
                 }
                 return Container();
@@ -261,7 +268,7 @@ class _HomePageState extends State<HomePage> {
             YMargin(10),
           ],
         ),
-      )),
+      ),
     );
   }
 }
