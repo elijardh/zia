@@ -132,104 +132,104 @@ class _HomePageState extends State<HomePage> {
             ),
           )),
       backgroundColor: Colors.white,
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            YMargin(25),
-            Container(
-              height: config.sh(35),
-              width: SizeConfig.screenWidthDp,
-              child: ListView.builder(
-                itemCount: catalogWidget.length,
-                itemBuilder: (context, index) {
-                  return Catalogs(
-                    catalogTitle: catalogWidget[index],
-                    index: index,
-                  );
-                },
-                scrollDirection: Axis.horizontal,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              YMargin(25),
+              Container(
+                height: config.sh(35),
+                width: SizeConfig.screenWidthDp,
+                child: ListView.builder(
+                  itemCount: catalogWidget.length,
+                  itemBuilder: (context, index) {
+                    return Catalogs(
+                      catalogTitle: catalogWidget[index],
+                      index: index,
+                    );
+                  },
+                  scrollDirection: Axis.horizontal,
+                ),
               ),
-            ),
-            YMargin(20),
-            TitleText(
-              text: "Trending!!!",
-              textColor: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-            NormalText(
-              text: "Here are trending items under this Category",
-              textColor: Colors.black.withOpacity(0.5),
-            ),
-            YMargin(20),
-            Container(
-              height: config.sh(200),
-              child: Consumer<HomePageViewModel>(
-                builder: (context, notifier, child) {
-                  if (notifier.error == true) {
-                    return Container(
-                      child: Center(
-                        child: NormalText(
-                          text: "ERROR",
-                          textColor: Colors.red,
+              YMargin(20),
+              TitleText(
+                text: "Trending!!!",
+                textColor: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+              NormalText(
+                text: "Here are trending items under this Category",
+                textColor: Colors.black.withOpacity(0.5),
+              ),
+              YMargin(20),
+              Container(
+                height: config.sh(200),
+                child: Consumer<HomePageViewModel>(
+                  builder: (context, notifier, child) {
+                    if (notifier.error == true) {
+                      return Container(
+                        child: Center(
+                          child: NormalText(
+                            text: "ERROR",
+                            textColor: Colors.red,
+                          ),
                         ),
-                      ),
-                    );
-                  }
-                  if (notifier.pList != null) {
-                    return ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: notifier.pList.list.length,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                              onTap: () {
-                                navigate(
-                                    context,
-                                    ProductInfo(
-                                      model: notifier.pList.list[index],
-                                    ));
-                              },
-                              child: HomePageWidget(
-                                model: notifier.pList.list[index],
-                              ));
-                        });
-                  } else {
-                    return Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                        image: AssetImage("assets/images/loading.gif"),
-                      )),
-                    );
-                  }
-                },
+                      );
+                    }
+                    if (notifier.pList != null) {
+                      return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: notifier.pList.list.length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                                onTap: () {
+                                  navigate(
+                                      context,
+                                      ProductInfo(
+                                        model: notifier.pList.list[index],
+                                      ));
+                                },
+                                child: HomePageWidget(
+                                  model: notifier.pList.list[index],
+                                ));
+                          });
+                    } else {
+                      return Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                          image: AssetImage("assets/images/loading.gif"),
+                        )),
+                      );
+                    }
+                  },
+                ),
               ),
-            ),
-            StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection("products")
-                  .where(
-                    "category",
-                    isEqualTo: context.watch<CatalogVM>().cat,
-                  )
-                  .snapshots(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (snapshot.hasData) {
-                  print(context.watch<CatalogVM>().cat);
-                  //print(snapshot.data.docs[0].data());
-                  List<ProductModel> list = snapshot.data.docs
-                      .map((e) => ProductModel.fromSnapshot(e))
-                      .toList();
-                  return SingleChildScrollView(
-                    child: Expanded(
-                      child: StaggeredGridView.builder(
-                        gridDelegate:
-                            SliverStaggeredGridDelegateWithFixedCrossAxisCount(
-                          staggeredTileBuilder: (index) =>
-                              StaggeredTile.count(2, index.isEven ? 2 : 1),
+              StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("products")
+                    .where(
+                      "category",
+                      isEqualTo: context.watch<CatalogVM>().cat,
+                    )
+                    .snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasData) {
+                    print(context.watch<CatalogVM>().cat);
+                    //print(snapshot.data.docs[0].data());
+                    List<ProductModel> list = snapshot.data.docs
+                        .map((e) => ProductModel.fromSnapshot(e))
+                        .toList();
+                    return Container(
+                      height: config.sh(500),
+                      //width: config.sw(200),
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          crossAxisSpacing: 2,
-                          mainAxisSpacing: 2,
+                          crossAxisSpacing: 1,
+                          mainAxisSpacing: 5,
                         ),
                         itemBuilder: (context, index) => InkWell(
                             onTap: () {
@@ -243,30 +243,29 @@ class _HomePageState extends State<HomePage> {
                               model: list[index],
                             )),
                         itemCount: list.length,
-                        scrollDirection: Axis.vertical,
                       ),
-                    ),
-                  );
-                }
-                return Container();
-              },
-            ),
-            YMargin(10),
-            Row(
-              children: [
-                NormalText(
-                  text: "Yeah, you wanna see more cool stuff?",
-                  textColor: Colors.black.withOpacity(0.5),
-                ),
-                NormalText(
-                  text: "Get Premium",
-                  textColor: XColors.primaryColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ],
-            ),
-            YMargin(10),
-          ],
+                    );
+                  }
+                  return Container();
+                },
+              ),
+              YMargin(10),
+              Row(
+                children: [
+                  NormalText(
+                    text: "Yeah, you wanna see more cool stuff?",
+                    textColor: Colors.black.withOpacity(0.5),
+                  ),
+                  NormalText(
+                    text: "Get Premium",
+                    textColor: XColors.primaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ],
+              ),
+              YMargin(10),
+            ],
+          ),
         ),
       ),
     );

@@ -19,12 +19,12 @@ class HomePageWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: config.sh(180),
+            height: config.sh(140),
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(vertical: 5),
               width: config.sw(150),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(5),
                 image: DecorationImage(
                   image: model.image != null
                       ? NetworkImage(model.image)
@@ -36,23 +36,23 @@ class HomePageWidget extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                NormalText(
-                  text: "Price:  ",
-                  textColor: Colors.black,
-                ),
-                NormalText(
-                  text: model.price != null
-                      ? '£ ${model.price.toString()}'
-                      : "N/A",
-                  textColor: XColors.primaryColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ],
-            ),
+            child: RichText(
+                text: TextSpan(
+                    text: "Price: ",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                    children: [
+                  TextSpan(
+                    text: model.price != null
+                        ? '£ ${model.price.toString()}'
+                        : "N/A",
+                    style: TextStyle(
+                      color: XColors.primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ])),
           ),
         ],
       ),
